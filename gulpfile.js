@@ -5,7 +5,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 
 var paths = {
-    files: ['src/*', '!src/**/*.js'],
+    files: ['src/*', '!src/{controllers,controllers/**}'],
     js: ['src/**/*.js'],
     filesdist: ['dist/**/*', '!dist/**/*.js'],
     jsdist: ['dist/**/*.js'],
