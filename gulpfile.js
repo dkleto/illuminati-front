@@ -8,11 +8,10 @@ var args = require('yargs').argv;
 var fs = require('fs');
 
 var paths = {
-    files: ['src/*', '!src/{controllers,controllers/**}'],
-    js: ['src/**/*.js', '!src/config/{conf-template.js, *.json}'],
+    files: ['src/**/*.css', 'src/**/*.html'],
+    js: ['src/controllers/*.js', 'src/config/conf.js'],
     filesdist: ['dist/**/*', '!dist/**/*.js'],
-    jsdist: ['dist/**/*.js'],
-    conf: ['src/config/conf.js']
+    jsdist: ['dist/**/*.js', 'dist/config']
 }
 
 /* Pull in env variables from a json file and generate a conf.js file */
