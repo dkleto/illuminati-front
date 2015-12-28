@@ -11,5 +11,9 @@ describe('Illuminati controllers', function() {
       $httpBackend = _$httpBackend_;
       ctrl = $controller('scheduleCtrl', {$scope: scope});
     }));
+
+    it('should include a unit test suite', function() {
+      expect(true).toBeTruthy();
+    });
   });
 });
