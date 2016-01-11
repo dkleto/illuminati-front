@@ -14,7 +14,7 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
     $scope.hexFromHsl = function(h, s, l) {
         var r, g, b;
 
-        h = h / 255;
+        h = h / 65535;
         s = s / 255;
         l = l / 255;
 
