@@ -3,18 +3,20 @@
 var illuminati = angular.module('illuminati', ['illuminati-conf']);
 
 illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($scope, $http, config) {
+
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
             $scope.schedules = data;
         })
         .error(function(data, status) {
         });
+
     $scope.hexFromHsl = function(h, s, l) {
         var r, g, b;
 
-        h = h * 1/255;
-        s = s * 1/255;
-        l = l * 1/255;
+        h = h / 255;
+        s = s / 255;
+        l = l / 255;
 
         if(s == 0){
             r = g = b = l;
@@ -36,7 +38,8 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
         }
 
         var numToHex = function(number) {
-            var result = Math.floor(Math.round(number * 255) / 16).toString(16);
+            var result;
+            result = Math.floor(Math.round(number * 255) / 16).toString(16);
             result += (Math.round(number * 255) % 16).toString(16);
             return result;
         }
