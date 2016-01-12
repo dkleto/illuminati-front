@@ -7,16 +7,26 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
             $scope.schedules = data;
+            for (var i=0; i<$scope.schedules.length; i++) {
+                var color;
+                if(typeof $scope.schedules[i].huesat === 'undefined') {
+                    color = '#ffffff';
+                } else {
+                    var huesat = $scope.schedules[i].huesat;
+                    color = $scope.hexFromHsl(huesat.hue, huesat.sat, $scope.schedules[i].bri);
+                }
+                $scope.schedules[i].color = {'background-color' : color};
+                console.log($scope.schedules[i].color);
+            }
         })
         .error(function(data, status) {
         });
-
     $scope.hexFromHsl = function(h, s, l) {
         var r, g, b;
-
         h = h / 65535;
         s = s / 255;
         l = l / 255;
+        console.log(h + ' ' + s + ' ' + l);
 
         if(s == 0){
             r = g = b = l;
@@ -43,7 +53,8 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
             result += (Math.round(number * 255) % 16).toString(16);
             return result;
         }
+        console.log('rgb: '+' '+r+' '+g+' '+b);
 
-        return numToHex(r) + numToHex(g) + numToHex(b);
+        return '#' + numToHex(r) + numToHex(g) + numToHex(b);
     }
 }]);
