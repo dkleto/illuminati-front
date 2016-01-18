@@ -89,6 +89,6 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
             return result;
         }
 
-        return numToHex(r) + numToHex(g) + numToHex(b);
+        return '#' + numToHex(r) + numToHex(g) + numToHex(b);
     }
 }]);
