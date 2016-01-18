@@ -7,9 +7,21 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
             $scope.schedules = data;
+            $scope.getColors();
         })
         .error(function(data, status) {
         });
+
+    $scope.getColors = function() {
+        var sched = $scope.schedules;
+        for (var i=0; i<sched.length; i++) {
+            var color = '#FFFFFF';
+            if (typeof sched[i].xy != 'undefined' && sched[i].xy != null) {
+                color = $scope.hexFromXy(sched[i].xy.x, sched[i].xy.y);
+            }
+            sched[i].color = {'background-color' : color};
+        }
+    };
     $scope.hexFromXy = function(x, y) {
         var z = 1.0 - x - y;
         var Y = 1.0;
