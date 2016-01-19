@@ -18,11 +18,14 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
   <div ng-repeat="schedule in schedules">
+    <div ng-style="getSchedColor(schedule)">
     Schedule time: {{schedule.time}}
     Cron: {{schedule.cron}}
     Label: {{schedule.label}}
     Light state: {{schedule.on}}
     Transition time: {{schedule.transitiontime}}
+    XY: {{schedule.xy}}
+    </div>
   </div>
 </body>
 </html>
