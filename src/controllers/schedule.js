@@ -7,7 +7,7 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
             $scope.schedules = data;
-            $scope.getColors();
+            $scope.getSchedColors();
         })
         .error(function(data, status) {
         });
