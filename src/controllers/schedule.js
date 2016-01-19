@@ -17,7 +17,7 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
         'b' : {'x' : 0.167, 'y' : 0.04}
     };
 
-    $scope.getColors = function() {
+    $scope.getSchedColors = function() {
         var sched = $scope.schedules;
         for (var i=0; i<sched.length; i++) {
             var color = '#FFFFFF';
