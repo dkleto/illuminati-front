@@ -11,6 +11,11 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
         })
         .error(function(data, status) {
         });
+    $scope.gamutB = {
+        'r' : {'x' : 0.675, 'y' : 0.322},
+        'g' : {'x' : 0.409, 'y' : 0.518},
+        'b' : {'x' : 0.167, 'y' : 0.04}
+    };
 
     $scope.getColors = function() {
         var sched = $scope.schedules;
