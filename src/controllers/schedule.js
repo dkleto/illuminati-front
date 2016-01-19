@@ -7,7 +7,6 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
             $scope.schedules = data;
-            $scope.getSchedColors();
         })
         .error(function(data, status) {
         });
@@ -16,18 +15,16 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
         'g' : {'x' : 0.409, 'y' : 0.518},
         'b' : {'x' : 0.167, 'y' : 0.04}
     };
-
-    $scope.getSchedColors = function() {
-        var sched = $scope.schedules;
-        for (var i=0; i<sched.length; i++) {
-            var color = '#FFFFFF';
-            if (typeof sched[i].xy != 'undefined' && sched[i].xy != null) {
-                color = $scope.hexFromXy(sched[i].xy.x, sched[i].xy.y);
-            }
-            sched[i].color = {'background-color' : color};
+    $scope.getSchedColor = function(schedule) {
+        var color = '#FFFFFF';
+        if (typeof schedule.xy !== 'undefined' && schedule.xy !== null) {
+            var rgb = $scope.xyToRgb(schedule.xy.x, schedule.xy.y);
+            color = rgbToHex(rgb.r, rgb.g, rgb.b);
         }
+        return {'background-color' : color};
     };
-    $scope.hexFromXy = function(x, y) {
+    $scope.xyToRgb = function(x, y) {
+        // TODO: Check x and y values for undefined or NAN
         var z = 1.0 - x - y;
         var Y = 1.0;
         var X = (Y / y) * x;
@@ -86,14 +83,17 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
                 b = 1.0;
             }
         }
+        console.log(r + ' ' + g + ' ' + b);
 
+        return {'r' : r, 'g' : g, 'b' : b};
+    };
+    $scope.rgbToHex = function(r, g, b) {
         var numToHex = function(number) {
             var result;
             result = Math.floor(Math.round(number * 255) / 16).toString(16);
             result += (Math.round(number * 255) % 16).toString(16);
             return result;
         }
-
         return '#' + numToHex(r) + numToHex(g) + numToHex(b);
-    }
+    };
 }]);
