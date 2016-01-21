@@ -19,7 +19,7 @@ illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($sc
         var color = '#FFFFFF';
         if (typeof schedule.xy !== 'undefined' && schedule.xy !== null) {
             var rgb = $scope.xyToRgb(schedule.xy.x, schedule.xy.y);
-            color = rgbToHex(rgb.r, rgb.g, rgb.b);
+            color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
         }
         return {'background-color' : color};
     };
