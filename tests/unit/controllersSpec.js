@@ -13,11 +13,5 @@ describe('Illuminati controllers', function() {
       ctrl = $controller('scheduleCtrl', {$scope: scope});
     }));
 
-    it('should calculate the correct hex color from hsl', function() {
-      // Test a few obvious hex colour codes.
-      expect(scope.hexFromHsl(65535, 255, 255)).toEqual('ffffff');
-      expect(scope.hexFromHsl(0, 0, 0)).toEqual('000000');
-      expect(scope.hexFromHsl((270/360)*65535, 255, 127.5)).toEqual('7f00ff');
-    });
   });
 });
