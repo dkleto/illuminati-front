@@ -1,8 +1,10 @@
 'use strict';
 
-var illuminati = angular.module('illuminati', ['illuminati-conf']);
+var scheduleCtrl = angular.module('scheduleCtrl', [
+   'illuminati-conf'
+]);
 
-illuminati.controller('scheduleCtrl', ['$scope', '$http', 'config', function($scope, $http, config) {
+scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($scope, $http, config) {
 
     $http.get(config.apiUrl + '/schedules')
         .success(function(data) {
