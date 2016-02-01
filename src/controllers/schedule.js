@@ -85,7 +85,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
                 b = 1.0;
             }
         }
-        console.log(r + ' ' + g + ' ' + b);
 
         return {'r' : r, 'g' : g, 'b' : b};
     };
