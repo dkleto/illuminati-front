@@ -1,0 +1,31 @@
+<div class="titleBar">
+<h1>
+Illuminati
+</h1>
+</div>
+<div class="scheduleBoard">
+<div ng-repeat="schedule in schedules">
+  <div class="schedule" ng-style="getSchedColor(schedule)">
+    <ul>
+      <li>
+        Time: {{schedule.time}}
+      </li>
+      <li>
+        Cron: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
+      </li>
+      <li>
+        Label: {{schedule.label}}
+      </li>
+      <li>
+        Light state: {{schedule.on}}
+      </li>
+      <li>
+        Transition time: {{schedule.transitiontime}}
+      </li>
+      <li>
+        XY: {{schedule.xy}}
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
