@@ -14,7 +14,7 @@ h1 {
 .titleBar h1 {
   padding-left: 0.3em;
 }
-.scheduleBoard {
+.scheduleBoard, .liveContent {
   background-color: #EEEEEE;
   overflow: auto;
   width: 100%;

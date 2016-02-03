@@ -2,7 +2,8 @@
 
 var illuminati = angular.module('illuminati', [
     'ngRoute',
-    'scheduleCtrl'
+    'scheduleCtrl',
+    'liveCtrl'
 ]);
 
 illuminati.config(['$routeProvider',
@@ -11,6 +12,10 @@ illuminati.config(['$routeProvider',
       when('/schedules', {
         templateUrl: 'partials/schedule-list.html',
         controller: 'scheduleCtrl'
+      }).
+      when('/live', {
+        templateUrl: 'partials/live.html',
+        controller: 'liveCtrl'
       }).
       otherwise({
         redirectTo: '/schedules'
