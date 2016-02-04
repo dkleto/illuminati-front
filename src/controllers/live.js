@@ -18,6 +18,6 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', function($scop
     $scope.x = 0;
     $scope.y = 0;
     $scope.bri = 255;
-    $scope.on = 1;
+    $scope.on = true;
     $scope.trans = 0;
 }]);
