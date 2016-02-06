@@ -9,7 +9,7 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', function($scop
         var data = {xy    : {x : x, y : y},
                     bri   : bri,
                     on    : on,
-                    trans : trans};
+                    transitiontime : trans};
         var putConfig = {timeout         : 5000, //TODO: Move this into config.
                          params          : data,
                          paramSerializer : '$httpParamSerializerJQLike'};
