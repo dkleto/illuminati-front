@@ -19,8 +19,9 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
     };
     $scope.getSchedColor = function(schedule) {
         var color = '#FFFFFF';
-        if (typeof schedule.xy !== 'undefined' && schedule.xy !== null) {
-            var rgb = $scope.xyToRgb(schedule.xy.x, schedule.xy.y);
+        var xy = schedule['xy'];
+        if (typeof xy == 'object' && typeof xy.x == typeof xy.y == 'number') {
+            var rgb = $scope.xyToRgb(xy.x, xy.y);
             color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
         }
         return {'background-color' : color};
