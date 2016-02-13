@@ -27,7 +27,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         return {'background-color' : color};
     };
     $scope.xyToRgb = function(x, y) {
-        // TODO: Check x and y values for undefined or NAN
         var z = 1.0 - x - y;
         var Y = 1.0;
         var X = (Y / y) * x;
