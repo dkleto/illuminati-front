@@ -33,7 +33,12 @@ describe('Illuminati controllers', function() {
       result = scope.getSchedColor({'xy' : {'x' : 'NaN', 'y': {}}});
       expect(typeof result).toEqual('object');
       expect(result['background-color']).toEqual('#FFFFFF');
-
+    });
+    it('should calculate hex colour values from rgb', function() {
+      // Check complete black.
+      expect(scope.rgbToHex(0, 0, 0)).toEqual('#000000');
+      // Check complete white.
+      expect(scope.rgbToHex(1, 1, 1)).toEqual('#ffffff');
     });
   });
 });
