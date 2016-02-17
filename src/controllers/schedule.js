@@ -95,6 +95,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
             result += (Math.round(number * 255) % 16).toString(16);
             return result;
         }
-        return '#' + numToHex(r) + numToHex(g) + numToHex(b);
+        return ('#' + numToHex(r) + numToHex(g) + numToHex(b)).toUpperCase();
     };
 }]);

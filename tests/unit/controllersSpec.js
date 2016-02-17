@@ -38,7 +38,11 @@ describe('Illuminati controllers', function() {
       // Check complete black.
       expect(scope.rgbToHex(0, 0, 0)).toEqual('#000000');
       // Check complete white.
-      expect(scope.rgbToHex(1, 1, 1)).toEqual('#ffffff');
+      expect(scope.rgbToHex(1, 1, 1)).toEqual('#FFFFFF');
+      // Try bright purple.
+      expect(scope.rgbToHex(0.541,0.169,0.886)).toEqual('#8A2BE2')
+      // Try bright blue.
+      expect(scope.rgbToHex(0,0,1)).toEqual('#0000FF')
     });
   });
 });
