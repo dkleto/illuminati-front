@@ -48,5 +48,11 @@ describe('Illuminati controllers', function() {
       // Try bright blue.
       expect(scope.rgbToHex(0,0,1)).toEqual('#0000FF')
     });
+
+    it('should calculate rgb colour values from xy coordinates', function() {
+      // Check bright blue.
+      var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
+      expect(scope.xyToRgb(0.168, 0.041)).toEqual(blueRgb);
+    });
   });
 });
