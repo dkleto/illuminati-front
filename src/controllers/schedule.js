@@ -97,4 +97,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         }
         return ('#' + numToHex(r) + numToHex(g) + numToHex(b)).toUpperCase();
     };
+    $scope.pointInGamut = function(x, y, gamut) {
+        return null;
+    }
 }]);

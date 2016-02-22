@@ -54,5 +54,19 @@ describe('Illuminati controllers', function() {
       var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
       expect(scope.xyToRgb(0.168, 0.041)).toEqual(blueRgb);
     });
+
+    it('should check if point fits within colour gamut', function() {
+      var gamutB = {
+        'r' : {'x' : 0.675, 'y' : 0.322},
+        'g' : {'x' : 0.409, 'y' : 0.518},
+        'b' : {'x' : 0.167, 'y' : 0.04}
+      };
+      // Check points that should be outside gamut.
+      expect(scope.pointInGamut(0.9, 0.9, gamutB)).toEqual(false);
+      expect(scope.pointInGamut(0.1, 0.3, gamutB)).toEqual(false);
+
+      // Check points that should be inside gamut.
+      expect(scope.pointInGamut(0.3, 0.3, gamutB)).toEqual(true);
+    });
   });
 });
