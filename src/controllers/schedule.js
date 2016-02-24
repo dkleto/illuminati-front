@@ -17,6 +17,20 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         'g' : {'x' : 0.409, 'y' : 0.518},
         'b' : {'x' : 0.167, 'y' : 0.04}
     };
+    $scope.xyPoint = function(x, y) {
+        // Check that x and y are both positive integers.
+        function checkVal(val) {
+          if (typeof val !== 'number') {
+            throw new Error('"' + val + '" is not an integer');
+          }
+          if (val > 1 || val < 0) {
+            throw new Error('"' + val + '" is not an integer between 0 and 1');
+          }
+        }
+        checkVal(x);
+        checkVal(y);
+        return {'x' : x, 'y': y};
+    }
     $scope.getSchedColor = function(schedule) {
         var color = '#FFFFFF';
         var xy = schedule['xy'];

@@ -68,5 +68,10 @@ describe('Illuminati controllers', function() {
       // Check points that should be inside gamut.
       expect(scope.pointInGamut(0.3, 0.3, gamutB)).toEqual(true);
     });
+
+    it('should throw an error for invalid xy values', function() {
+      expect(function() {scope.xyPoint('NaN',2);}).toThrow(new Error('"NaN" is not an integer'));
+      expect(function() {scope.xyPoint(-1,2);}).toThrow(new Error('"-1" is not an integer between 0 and 1'));
+    });
   });
 });
