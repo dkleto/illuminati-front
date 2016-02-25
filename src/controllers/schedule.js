@@ -34,17 +34,18 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
     $scope.getSchedColor = function(schedule) {
         var color = '#FFFFFF';
         var xy = schedule['xy'];
-        if (typeof xy == 'object' && typeof xy.x == typeof xy.y == 'number') {
-            var rgb = $scope.xyToRgb(xy.x, xy.y);
+        if (typeof xy == 'object') {
+            var xy = xyPoint(xy['x'], xy['y']);
+            var rgb = $scope.xyToRgb(xy);
             color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
         }
         return {'background-color' : color};
     };
-    $scope.xyToRgb = function(x, y) {
-        var z = 1.0 - x - y;
+    $scope.xyToRgb = function(point) {
+        var z = 1.0 - point.x - point.y;
         var Y = 1.0;
-        var X = (Y / y) * x;
-        var Z = (Y / y) * z;
+        var X = (Y / point.y) * point.x;
+        var Z = (Y / point.y) * z;
 
         // sRGB D65 conversion
         var r =  X * 1.656492 - Y * 0.354851 - Z * 0.255038;

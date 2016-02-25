@@ -53,7 +53,8 @@ describe('schedule controller', function() {
     it('should calculate rgb colour values from xy coordinates', function() {
       // Check bright blue.
       var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
-      expect(scope.xyToRgb(0.168, 0.041)).toEqual(blueRgb);
+      var point = {'x' : 0.168, 'y' : 0.041};
+      expect(scope.xyToRgb(point)).toEqual(blueRgb);
     });
   });
 
