@@ -17,20 +17,12 @@ describe('schedule controller', function() {
       expect(typeof result).toEqual('object');
       expect(result['background-color']).toEqual('#FFFFFF');
 
+    });
+
+    it('should throw an error for incorrect xy type', function() {
       // Check incorrect type for xy.
-      result = scope.getSchedColor({'xy' : 'Clearly not an object'});
-      expect(typeof result).toEqual('object');
-      expect(result['background-color']).toEqual('#FFFFFF');
-
-      // Check missing xy.y and xy.x
-      result = scope.getSchedColor({'xy' : {}});
-      expect(typeof result).toEqual('object');
-      expect(result['background-color']).toEqual('#FFFFFF');
-
-      // Check incorrect type for xy.y and xy.x
-      result = scope.getSchedColor({'xy' : {'x' : 'NaN', 'y': {}}});
-      expect(typeof result).toEqual('object');
-      expect(result['background-color']).toEqual('#FFFFFF');
+      var invalid = {'xy' : 'Clearly not an object'};
+      expect(function() {scope.getSchedColor(invalid);}).toThrow(new Error('XY has incorrect type: "string"'));
     });
   });
   describe('rgbToHex', function(){

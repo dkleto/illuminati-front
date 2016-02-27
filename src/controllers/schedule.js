@@ -35,9 +35,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         var color = '#FFFFFF';
         var xy = schedule['xy'];
         if (typeof xy == 'object') {
-            var xy = xyPoint(xy['x'], xy['y']);
-            var rgb = $scope.xyToRgb(xy);
-            color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
+          var xy = $scope.xyPoint(xy['x'], xy['y']);
+          var rgb = $scope.xyToRgb(xy);
+          color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
+        } else if (typeof xy != 'undefined') {
+          throw new Error('XY has incorrect type: "' + typeof xy + '"');
         }
         return {'background-color' : color};
     };
