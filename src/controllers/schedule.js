@@ -117,7 +117,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
     $scope.crossProduct = function(p1, p2) {
         return (p1.x * p2.y - p1.y * p2.x);
     }
-    $scope.pointInGamut = function(x, y, gamut) {
+    $scope.pointInGamut = function(point, gamut) {
         return null;
     }
 }]);

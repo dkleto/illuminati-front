@@ -58,11 +58,11 @@ describe('schedule controller', function() {
         'b' : {'x' : 0.167, 'y' : 0.04}
       };
       // Check points that should be outside gamut.
-      expect(scope.pointInGamut(0.9, 0.9, gamutB)).toEqual(false);
-      expect(scope.pointInGamut(0.1, 0.3, gamutB)).toEqual(false);
+      expect(scope.pointInGamut(xyPoint(0.9, 0.9), gamutB)).toEqual(false);
+      expect(scope.pointInGamut(xyPoint(0.1, 0.3), gamutB)).toEqual(false);
 
       // Check points that should be inside gamut.
-      expect(scope.pointInGamut(0.3, 0.3, gamutB)).toEqual(true);
+      expect(scope.pointInGamut(xyPoint(0.3, 0.3), gamutB)).toEqual(true);
     });
   });
 
