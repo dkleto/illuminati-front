@@ -118,6 +118,19 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         return (p1.x * p2.y - p1.y * p2.x);
     }
     $scope.pointInGamut = function(point, gamut) {
-        return null;
+      var v1 = $scope.xyPoint(gamut.g.x - gamut.r.x, gamut.g.y - gamut.r.y);
+      var v2 = $scope.xyPoint(gamut.b.x - gamut.r.x, gamut.b.y - gamut.r.y);
+
+      var q = $scope.xyPoint(point.x - gamut.r.x, point.y - gamut.r.y);
+
+      var s = $scope.crossProduct(q, v2) / $scope.crossProduct(v1, v2);
+      var t = $scope.crossProduct(v1, q) / $scope.crossProduct(v1, v2);
+
+      if ( (s >= 0.0) && (t >= 0.0) && (s + t <= 1.0)) {
+          return true;
+      }
+      else {
+          return false;
+      }
     }
 }]);
