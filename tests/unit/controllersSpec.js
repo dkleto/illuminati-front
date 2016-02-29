@@ -67,11 +67,15 @@ describe('schedule controller', function() {
   });
 
   describe('xyPoint', function(){
+    it('should return xy object when given valid x and y values', function() {
+      expect(scope.xyPoint(-0.5,0.5)).toEqual({'x' : -0.5, 'y' : 0.5});
+    });
+
     it('should throw an error for invalid xy values', function() {
       var noxy = {};
       expect(function() {scope.xyPoint(noxy['x'],noxy['y']);}).toThrow(new Error('"undefined" is not an integer'));
       expect(function() {scope.xyPoint('NaN',2);}).toThrow(new Error('"NaN" is not an integer'));
-      expect(function() {scope.xyPoint(-1,2);}).toThrow(new Error('"-1" is not an integer between 0 and 1'));
+      expect(function() {scope.xyPoint(-2,2);}).toThrow(new Error('"-2" is not an integer between -1 and 1'));
     });
   });
 });

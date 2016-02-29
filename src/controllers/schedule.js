@@ -23,8 +23,8 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
           if (typeof val !== 'number') {
             throw new Error('"' + val + '" is not an integer');
           }
-          if (val > 1 || val < 0) {
-            throw new Error('"' + val + '" is not an integer between 0 and 1');
+          if (val > 1 || val < -1) {
+            throw new Error('"' + val + '" is not an integer between -1 and 1');
           }
         }
         checkVal(x);
