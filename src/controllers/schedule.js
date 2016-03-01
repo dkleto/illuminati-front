@@ -127,10 +127,10 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
       var t = $scope.crossProduct(v1, q) / $scope.crossProduct(v1, v2);
 
       if ( (s >= 0.0) && (t >= 0.0) && (s + t <= 1.0)) {
-          return true;
+        return true;
       }
       else {
-          return false;
+        return false;
       }
     }
     $scope.closestPointOnLine = function(v1, v2, point) {
