@@ -133,4 +133,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
           return false;
       }
     }
+    $scope.closestPointOnLine = function(v1, v2, point) {
+      return null;
+    }
 }]);

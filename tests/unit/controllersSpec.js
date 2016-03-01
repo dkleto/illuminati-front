@@ -78,4 +78,12 @@ describe('schedule controller', function() {
       expect(function() {scope.xyPoint(-2,2);}).toThrow(new Error('"-2" is not an integer between -1 and 1'));
     });
   });
+  describe('closestPointOnLine', function(){
+    it('should find correct closest point', function() {
+      var v1 = {'x' : 0.2, 'y' : 0.5};
+      var v2 = {'x' : 0.4, 'y' : 0.5};
+      var point = {'x' : 0.2, 'y' : 0.2};
+      expect(scope.closestPointOnLine(v1, v2, point)).toEqual(v1);
+    });
+  });
 });
