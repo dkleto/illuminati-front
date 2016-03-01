@@ -134,6 +134,20 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
       }
     }
     $scope.closestPointOnLine = function(v1, v2, point) {
-      return null;
+      var v1p = $scope.xyPoint(point.x - v1.x, point.y - v1.y);
+      var v1v2 = $scope.xyPoint(v2.x - v1.x, v2.y - v1.y);
+      var v1v22 = v1v2.x * v1v2.x + v1v2.y * v1v2.y;
+      var v1p_v1v2 = v1p.x * v1v2.x + v1p.y * v1v2.y;
+      var t = v1p_v1v2 / v1v22;
+
+      if (t < 0) {
+          t = 0;
+      }
+      else if (t > 1) {
+          t = 1;
+      }
+
+      var newPoint = $scope.xyPoint(v1.x + v1v2.x * t, v1.y + v1v2.y * t);
+      return newPoint;
     }
 }]);
