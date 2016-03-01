@@ -80,10 +80,18 @@ describe('schedule controller', function() {
   });
   describe('closestPointOnLine', function(){
     it('should find correct closest point', function() {
+      // With point directly below v1, closest point should be v1.
       var v1 = {'x' : 0.2, 'y' : 0.5};
       var v2 = {'x' : 0.4, 'y' : 0.5};
       var point = {'x' : 0.2, 'y' : 0.2};
       expect(scope.closestPointOnLine(v1, v2, point)).toEqual(v1);
+
+      // Point should be closest to the midpoint of v1-v2.
+      v1 = {'x' : 0.3, 'y' : 0.1};
+      v2 = {'x' : 0.1, 'y' : 0.3};
+      point = {'x' : 0.1, 'y' : 0.1};
+      var midpoint = {'x' : 0.2, 'y' : 0.2};
+      expect(scope.closestPointOnLine(v1, v2, point)).toEqual(midpoint);
     });
   });
 });
