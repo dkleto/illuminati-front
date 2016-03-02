@@ -12,7 +12,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         })
         .error(function(data, status) {
         });
-    $scope.gamutB = {
+    $scope.gamut = {
         'r' : {'x' : 0.675, 'y' : 0.322},
         'g' : {'x' : 0.409, 'y' : 0.518},
         'b' : {'x' : 0.167, 'y' : 0.04}
@@ -149,5 +149,12 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
 
       var newPoint = $scope.xyPoint(v1.x + v1v2.x * t, v1.y + v1v2.y * t);
       return newPoint;
-    }
+    };
+    $scope.distanceBetweenPoints = function(p1, p2) {
+      var dx = p1.x - p2.x; // horizontal difference
+      var dy = p1.y - p2.y; // vertical difference
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      return dist;
+    };
 }]);

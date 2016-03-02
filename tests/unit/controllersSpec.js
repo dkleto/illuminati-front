@@ -94,4 +94,18 @@ describe('schedule controller', function() {
       expect(scope.closestPointOnLine(v1, v2, point)).toEqual(midpoint);
     });
   });
+
+  describe('distanceBetweenPoints', function(){
+    it('should determine the distance between two points', function() {
+      // First test two points on the same horizontal plane.
+      var p1 = {'x' : 0.1, 'y' : 0.1};
+      var p2 = {'x' : 0.6, 'y' : 0.1};
+      expect(scope.distanceBetweenPoints(p1, p2)).toEqual(0.5);
+
+      // Test points on a diagonal plane.
+      p1 = {'x' : 0.3, 'y' : 0.1};
+      p2 = {'x' : 0.1, 'y' : 0.3};
+      expect(scope.distanceBetweenPoints(p1, p2).toFixed(3)).toEqual('0.283');
+    });
+  });
 });
