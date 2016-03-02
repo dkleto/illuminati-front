@@ -8,6 +8,7 @@ module.exports = function(config){
       'node_modules/angular-route/angular-route.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'dist/**.js',
+      'src/**/*.js',
       'tests/unit/**.js'
     ],
 
@@ -24,13 +25,17 @@ module.exports = function(config){
             'karma-firefox-launcher',
             'karma-jasmine',
             'karma-jasmine-matchers',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-sourcemap-loader'
             ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
-    }
+    },
 
+    preprocessors: {
+      'dist/all.min.js': ['sourcemap']
+    }
   });
 };

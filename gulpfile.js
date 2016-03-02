@@ -51,10 +51,10 @@ gulp.task('js', ['clean:js'], function () {
        gulp.task('replace');
     }
     gulp.src(paths.js)
-        .pipe(sourcemaps.init())
-            .pipe(uglify())
+            .pipe(sourcemaps.init())
             .pipe(concat('all.min.js'))
-        .pipe(sourcemaps.write())
+            .pipe(uglify())
+            .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('dist'));
 });
 
