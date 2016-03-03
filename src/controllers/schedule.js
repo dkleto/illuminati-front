@@ -116,8 +116,9 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
     };
     $scope.crossProduct = function(p1, p2) {
         return (p1.x * p2.y - p1.y * p2.x);
-    }
+    };
     $scope.pointInGamut = function(point, gamut) {
+
       var v1 = $scope.xyPoint(gamut.g.x - gamut.r.x, gamut.g.y - gamut.r.y);
       var v2 = $scope.xyPoint(gamut.b.x - gamut.r.x, gamut.b.y - gamut.r.y);
 
@@ -132,7 +133,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
       else {
         return false;
       }
-    }
+    };
     $scope.closestPointOnLine = function(v1, v2, point) {
       var v1p = $scope.xyPoint(point.x - v1.x, point.y - v1.y);
       var v1v2 = $scope.xyPoint(v2.x - v1.x, v2.y - v1.y);
