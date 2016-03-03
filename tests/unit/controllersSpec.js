@@ -46,7 +46,7 @@ describe('schedule controller', function() {
       // Check bright blue.
       var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
       var point = {'x' : 0.168, 'y' : 0.041};
-      expect(scope.xyToRgb(point)).toEqual(blueRgb);
+      expect(scope.xyToRgb(point, scope.gamut)).toEqual(blueRgb);
     });
   });
 
@@ -78,6 +78,7 @@ describe('schedule controller', function() {
       expect(function() {scope.xyPoint(-2,2);}).toThrow(new Error('"-2" is not an integer between -1 and 1'));
     });
   });
+
   describe('closestPointOnLine', function(){
     it('should find correct closest point', function() {
       // With point directly below v1, closest point should be v1.
