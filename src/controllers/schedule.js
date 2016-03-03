@@ -36,7 +36,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         var xy = schedule['xy'];
         if (typeof xy == 'object') {
           var xy = $scope.xyPoint(xy['x'], xy['y']);
-          var rgb = $scope.xyToRgb(xy);
+          var rgb = $scope.xyToRgb(xy, $scope.gamut);
           color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
         } else if (typeof xy != 'undefined') {
           throw new Error('XY has incorrect type: "' + typeof xy + '"');
