@@ -109,4 +109,15 @@ describe('schedule controller', function() {
       expect(scope.distanceBetweenPoints(p1, p2).toFixed(3)).toEqual('0.283');
     });
   });
+  describe('closestPointInGamut', function(){
+    it('should determine closest point within gamut', function() {
+      var gamut = scope.gamut;
+      // Test with point immediately above green vertex.
+      var p = {'x' : 0.409, 'y' : 0.7};
+      expect(scope.closestPointInGamut(p, gamut)).toEqual(gamut.g);
+      // Try point near red vertex.
+      p = {'x' : 0.7, 'y': 0.35};
+      expect(scope.closestPointInGamut(p, gamut)).toEqual(gamut.r);
+    });
+  });
 });

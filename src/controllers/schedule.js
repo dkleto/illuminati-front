@@ -36,6 +36,9 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         var xy = schedule['xy'];
         if (typeof xy == 'object') {
           var xy = $scope.xyPoint(xy['x'], xy['y']);
+          if (!$scope.pointInGamut(xy, $scope.gamut)) {
+              xy = $scope.closestPointInGamut(xy, $scope.gamut);
+          }
           var rgb = $scope.xyToRgb(xy, $scope.gamut);
           color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
         } else if (typeof xy != 'undefined') {
@@ -157,5 +160,32 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
       var dist = Math.sqrt(dx * dx + dy * dy);
 
       return dist;
+    };
+    $scope.closestPointInGamut = function (point, gamut) {
+      // Find the closest point on each line in the triangle.
+      var pAB = $scope.closestPointOnLine(gamut.r, gamut.g, point);
+      var pAC = $scope.closestPointOnLine(gamut.b, gamut.r, point);
+      var pBC = $scope.closestPointOnLine(gamut.g, gamut.b, point);
+
+      var dAB = $scope.distanceBetweenPoints(point, pAB);
+      var dAC = $scope.distanceBetweenPoints(point, pAC);
+      var dBC = $scope.distanceBetweenPoints(point, pBC);
+
+      var lowest = dAB;
+      var closestPoint = pAB;
+
+      if (dAC < lowest) {
+        lowest = dAC;
+        closestPoint = pAC;
+      }
+      if (dBC < lowest) {
+        lowest = dBC;
+        closestPoint = pBC;
+      }
+
+      // Change the point value to a value which is within the gamut.
+      point.x = closestPoint.x;
+      point.y = closestPoint.y;
+      return point;
     };
 }]);
