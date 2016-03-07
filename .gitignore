@@ -6,3 +6,4 @@ tmp
 .idea
 dist
 src/config/conf.js
+npm-debug.log
