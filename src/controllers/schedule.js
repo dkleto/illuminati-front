@@ -17,6 +17,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         'g' : {'x' : 0.409, 'y' : 0.518},
         'b' : {'x' : 0.167, 'y' : 0.04}
     };
+    $scope.wideGamut = {
+        'r' : {'x' : 0.700607, 'y' : 0.299301},
+        'g' : {'x' : 0.172416, 'y' : 0.746797},
+        'b' : {'x' : 0.135503, 'y' : 0.039879}
+    };
     $scope.xyPoint = function(x, y) {
         // Check that x and y are both positive integers.
         function checkVal(val) {
@@ -37,7 +42,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         if (typeof xy == 'object') {
           var xy = $scope.xyPoint(xy['x'], xy['y']);
           if (!$scope.pointInGamut(xy, $scope.gamut)) {
-              xy = $scope.closestPointInGamut(xy, $scope.gamut);
+            xy = $scope.closestPointInGamut(xy, $scope.gamut);
+          }
+          // Make sure point is within Phillips "wide gamut" as well.
+          if (!$scope.pointInGamut(xy, $scope.wideGamut)) {
+            xy = $scope.closestPointInGamut(xy, $scope.wideGamut);
           }
           var rgb = $scope.xyToRgb(xy, $scope.gamut);
           color = $scope.rgbToHex(rgb.r, rgb.g, rgb.b);
@@ -46,65 +55,34 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
         }
         return {'background-color' : color};
     };
-    $scope.xyToRgb = function(point) {
-        var z = 1.0 - point.x - point.y;
-        var Y = 1.0;
-        var X = (Y / point.y) * point.x;
-        var Z = (Y / point.y) * z;
+    $scope.xyToRgb = function(point, gamut) {
 
-        // sRGB D65 conversion
+        var z = 1 - point.x - point.y;
+        var Y = 1;
+        var X = (Y / point.y) * point.x;
+        var Z = (Y / point.y) * z
+
+        // Convert to linear rgb.
         var r =  X * 1.656492 - Y * 0.354851 - Z * 0.255038;
         var g = -X * 0.707196 + Y * 1.655397 + Z * 0.036152;
         var b =  X * 0.051713 - Y * 0.121364 + Z * 1.011530;
 
-        if (r > b && r > g && r > 1.0) {
-            // red is too big
-            g = g / r;
-            b = b / r;
-            r = 1.0;
-        }
-        else if (g > b && g > r && g > 1.0) {
-            // green is too big
-            r = r / g;
-            b = b / g;
-            g = 1.0;
-        }
-        else if (b > r && b > g && b > 1.0) {
-            // blue is too big
-            r = r / b;
-            g = g / b;
-            b = 1.0;
+        var maxComponent = Math.max((Math.max(r, g), b));
+
+        if (maxComponent > 1.0) {
+                r /= maxComponent;
+                g /= maxComponent;
+                b /= maxComponent;
         }
 
-        // Apply gamma correction
-        r = r <= 0.0031308 ? 12.92 * r : (1.0 + 0.055) * Math.pow(r, (1.0 / 2.4)) - 0.055;
-        g = g <= 0.0031308 ? 12.92 * g : (1.0 + 0.055) * Math.pow(g, (1.0 / 2.4)) - 0.055;
-        b = b <= 0.0031308 ? 12.92 * b : (1.0 + 0.055) * Math.pow(b, (1.0 / 2.4)) - 0.055;
+        // Apply companding.
+        r = r <= 0.0031308 ? 12.92 * r : 1.055 * Math.pow(r, (1 / 2.4)) - 0.055;
+        g = g <= 0.0031308 ? 12.92 * g : 1.055 * Math.pow(g, (1 / 2.4)) - 0.055;
+        b = b <= 0.0031308 ? 12.92 * b : 1.055 * Math.pow(b, (1 / 2.4)) - 0.055;
 
-        if (r > b && r > g) {
-            // red is biggest
-            if (r > 1.0) {
-                g = g / r;
-                b = b / r;
-                r = 1.0;
-            }
-        }
-        else if (g > b && g > r) {
-            // green is biggest
-            if (g > 1.0) {
-                r = r / g;
-                b = b / g;
-                g = 1.0;
-            }
-        }
-        else if (b > r && b > g) {
-            // blue is biggest
-            if (b > 1.0) {
-                r = r / b;
-                g = g / b;
-                b = 1.0;
-            }
-        }
+        r = $scope.bound(r);
+        g = $scope.bound(g);
+        b = $scope.bound(b);
 
         return {'r' : r, 'g' : g, 'b' : b};
     };
@@ -187,5 +165,8 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
       point.x = closestPoint.x;
       point.y = closestPoint.y;
       return point;
+    };
+    $scope.bound = function(value) {
+      return Math.max(0, Math.min(1, value));
     };
 }]);
