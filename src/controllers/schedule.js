@@ -168,4 +168,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
   $scope.bound = function(value) {
     return Math.max(0, Math.min(1, value));
   };
+  $scope.mapXyToGamut = function(point, gamut) {
+    return null;
+  };
 }]);

@@ -120,4 +120,18 @@ describe('schedule controller', function() {
       expect(scope.closestPointInGamut(p, gamut)).toEqual(gamut.r);
     });
   });
+  describe('mapXyToGamut', function(){
+    it('should map xy coordinates onto provided gamut', function() {
+      var gamut = scope.gamut;
+      // First try topmost tip of gamut (green vertex).
+      var xy = {'x' : 0.5, 'y' : 1};
+      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.g);
+      // Try blue vertex of gamut.
+      xy = {'x' : 0, 'y' : 0};
+      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.b);
+      // Try red vertex of gamut.
+      xy = {'x' : 1, 'y' : 0};
+      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.r);
+    });
+  });
 });
