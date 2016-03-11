@@ -123,15 +123,19 @@ describe('schedule controller', function() {
   describe('mapXyToGamut', function(){
     it('should map xy coordinates onto provided gamut', function() {
       var gamut = scope.gamut;
+      // Helper function to round resulting xy points.
+      var roundPoint = function(xyPoint) {
+        return {'x' : +xyPoint['x'].toFixed(3), 'y' : +xyPoint.y.toFixed(3)};
+      }
       // First try topmost tip of gamut (green vertex).
       var xy = {'x' : 0.5, 'y' : 1};
-      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.g);
+      expect(roundPoint(scope.mapXyToGamut(xy, gamut))).toEqual(gamut.g);
       // Try blue vertex of gamut.
       xy = {'x' : 0, 'y' : 0};
-      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.b);
+      expect(roundPoint(scope.mapXyToGamut(xy, gamut))).toEqual(gamut.b);
       // Try red vertex of gamut.
       xy = {'x' : 1, 'y' : 0};
-      expect(scope.mapXyToGamut(xy, gamut)).toEqual(gamut.r);
+      expect(roundPoint(scope.mapXyToGamut(xy, gamut))).toEqual(gamut.r);
     });
   });
 });

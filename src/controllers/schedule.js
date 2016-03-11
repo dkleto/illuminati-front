@@ -1,8 +1,6 @@
 'use strict';
 
-var scheduleCtrl = angular.module('scheduleCtrl', [
-  'illuminati-conf'
-]);
+var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
 scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($scope, $http, config) {
 
@@ -169,6 +167,24 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', function($
     return Math.max(0, Math.min(1, value));
   };
   $scope.mapXyToGamut = function(point, gamut) {
-    return null;
+    var x = point.x;
+    var y = point.y;
+
+    // A perpendicular line from point p on br will pass through g.
+    var p = $scope.closestPointOnLine(gamut.b, gamut.r, gamut.g);
+
+    if (x >= 0.5) {
+      // Get pr as a vector, and multiply it by scalar distance from x = 0.5.
+      var xv = $scope.xyPoint((gamut.r.x - p.x) * (x - 0.5) / 0.5, (gamut.r.y - p.y) * (x - 0.5) / 0.5);
+    } else {
+      // Get pb as a vector, and multiple it by scalar distance from x = 0.5.
+      var xv = $scope.xyPoint((gamut.b.x - p.x ) * (0.5 - x) / 0.5, (gamut.b.y - p.y) * (0.5 - x) / 0.5);
+    }
+
+    // Now get pg as a vector and multiply it by scalar y.
+    var yv = $scope.xyPoint((gamut.g.x - p.x) * y, (gamut.g.y - p.y) * y);
+
+    // Add x and y vectors and translate them to point p.
+    return $scope.xyPoint(yv.x + xv.x + p.x, yv.y + xv.y + p.y);
   };
 }]);
