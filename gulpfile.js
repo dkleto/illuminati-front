@@ -9,7 +9,7 @@ var fs = require('fs');
 
 var paths = {
     files: ['src/**/*.css', 'src/**/*.html'],
-    js: ['src/*.js', 'src/controllers/*.js', 'src/config/conf.js'],
+    js: ['src/*.js', 'src/controllers/*.js', 'src/services/*.js', 'src/config/conf.js'],
     filesdist: ['dist/**/*', '!dist/**/*.js'],
     jsdist: ['dist/**/*.js', 'dist/config']
 }

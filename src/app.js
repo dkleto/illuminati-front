@@ -3,7 +3,8 @@
 var illuminati = angular.module('illuminati', [
     'ngRoute',
     'scheduleCtrl',
-    'liveCtrl'
+    'liveCtrl',
+    'illuminatiServices'
 ]);
 
 illuminati.config(['$routeProvider',
