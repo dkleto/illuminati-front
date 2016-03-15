@@ -38,10 +38,16 @@ describe('illuminati services', function() {
 
   describe('xyToRgb', function(){
     it('should calculate rgb colour values from xy coordinates', function() {
+      // Helper function to round resulting rgb objects.
+      var roundRgb = function(rgb) {
+        return {'r' : +rgb.r.toFixed(3),
+                'g' : +rgb.g.toFixed(3),
+                'b' : +rgb.b.toFixed(3)};
+      };
       // Check bright blue.
       var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
       var point = {'x' : 0.168, 'y' : 0.041};
-      expect(Color.xyToRgb(point, gamutB)).toEqual(blueRgb);
+      expect(roundRgb(Color.xyToRgb(point, gamutB))).toEqual(blueRgb);
     });
   });
 
@@ -114,7 +120,7 @@ describe('illuminati services', function() {
       // Helper function to round resulting xy points.
       var roundPoint = function(xyPoint) {
         return {'x' : +xyPoint['x'].toFixed(3), 'y' : +xyPoint.y.toFixed(3)};
-      }
+      };
       // First try topmost tip of gamut (green vertex).
       var xy = {'x' : 0.5, 'y' : 1};
       expect(roundPoint(Color.mapXyToGamut(xy, gamutB))).toEqual(gamutB.g);
