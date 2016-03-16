@@ -2,7 +2,7 @@
 
 var scheduleCtrl = angular.module('liveCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', function($scope, $http, config, color) {
+scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', function($scope, $http, config, Color) {
   $scope.submit = function(x, y, bri, on, trans) {
     var data = {xy    : {x : x, y : y},
                 bri   : bri,

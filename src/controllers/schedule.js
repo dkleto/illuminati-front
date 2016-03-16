@@ -2,7 +2,7 @@
 
 var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', function($scope, $http, config, color) {
+scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', function($scope, $http, config, Color) {
 
   $http.get(config.apiUrl + '/schedules')
     .success(function(data) {
