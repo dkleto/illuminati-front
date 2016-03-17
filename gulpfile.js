@@ -8,7 +8,7 @@ var args = require('yargs').argv;
 var fs = require('fs');
 
 var paths = {
-    files: ['src/**/*.css', 'src/**/*.html'],
+    files: ['src/**/*.css', 'src/**/*.html', 'src/**/*.png'],
     js: ['src/*.js', 'src/controllers/*.js', 'src/services/*.js', 'src/config/conf.js'],
     filesdist: ['dist/**/*', '!dist/**/*.js'],
     jsdist: ['dist/**/*.js', 'dist/config']
