@@ -26,4 +26,15 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
   $scope.bri = 255;
   $scope.on = true;
   $scope.trans = 0;
+  $scope.getXy = function(event) {
+    var position = event.target.getBoundingClientRect();
+    var x = event.clientX - position.left;
+    var y = event.clientY - position.top;
+    var height = position.height;
+    var width = position.width;
+
+    $scope.x = x / width;
+    $scope.y = 1 - y / height;
+    return Color.xyPoint(x / width, 1 - y / height);
+  };
 }]);
