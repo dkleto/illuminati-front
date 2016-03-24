@@ -33,6 +33,14 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
     var height = position.height;
     var width = position.width;
 
+    // Height, width should be non-zero and positive.
+    if (height <= 0 || width <= 0) {
+      throw new Error('Invalid height and width values - ' +
+                      'height: ' + height + 'width: ' + width);
+    }
+
+    // X, Y should be less than or equal to width and height respectively.
+
     $scope.x = x / width;
     $scope.y = 1 - y / height;
     return Color.xyPoint(x / width, 1 - y / height);
