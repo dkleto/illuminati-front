@@ -45,7 +45,7 @@ describe('illuminati services', function() {
                 'b' : +rgb.b.toFixed(3)};
       };
       // Check bright blue.
-      var blueRgb = {'r' : 0, 'g' : 0, 'b' : 1};
+      var blueRgb = {'r' : 0.308, 'g' : 0, 'b' : 1};
       var point = {'x' : 0.168, 'y' : 0.041};
       expect(roundRgb(Color.xyToRgb(point, gamutB))).toEqual(blueRgb);
     });
