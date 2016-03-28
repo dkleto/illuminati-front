@@ -9,7 +9,7 @@ module.exports = function(config){
       'node_modules/angular-mocks/angular-mocks.js',
       'dist/**.js',
       'src/**/*.js',
-      'tests/unit/**.js'
+      'tests/unit/**/*.js'
     ],
 
     autoWatch : true,
