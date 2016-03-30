@@ -4,7 +4,7 @@
   </h1>
 </div>
 <div class="liveContent">
-   <input type="text" ng-model='bri' ng-change="submit('bri', bri)">Brightness</input>
+   <input type="range" max="255" ng-model='bri' ng-change="submit('bri', bri)">Brightness</input>
    <input type="checkbox" ng-model="on" ng-change="submit('on', on)">On/off</input>
    <input type="text" ng-model="trans">Transition time</input>
    <a ng-click="submit(x, y, bri, on, trans)">Yes?</a>
