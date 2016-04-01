@@ -7,7 +7,6 @@
    <input type="range" max="255" ng-model='bri' ng-change="submit('bri', bri)">Brightness</input>
    <input type="checkbox" ng-model="on" ng-change="submit('on', on)">On/off</input>
    <input type="text" ng-model="trans">Transition time</input>
-   <a ng-click="submit(x, y, bri, on, trans)">Yes?</a>
   <map name="xyMap">
     <area shape="poly" coords="0,200,100,0,200,200" href="#/live" ng-click="submit('xy', getXy($event))">
   </map>
