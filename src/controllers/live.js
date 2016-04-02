@@ -1,6 +1,6 @@
 'use strict';
 
-var scheduleCtrl = angular.module('liveCtrl', ['illuminati-conf']);
+var scheduleCtrl = angular.module('liveCtrl', ['illuminati-conf', 'rzModule']);
 
 scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$window', function($scope, $http, config, Color, $window) {
   // Prevent images (e.g. color triangle) from being draggable.
@@ -24,6 +24,17 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
       });
   };
   $scope.bri = 255;
+  $scope.briSlider = {
+    value : 255,
+    options : {
+      floor : 0,
+      ceil : 255,
+      vertical : true,
+      onChange : function(sliderId, modelValue, highValue) {
+        $scope.submit('bri', modelValue);
+      }
+    }
+  }
   $scope.on = true;
   $scope.trans = 0;
   $scope.getXy = function(event) {

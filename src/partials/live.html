@@ -4,7 +4,7 @@
   </h1>
 </div>
 <div class="liveContent">
-   <input type="range" max="255" ng-model='bri' ng-change="submit('bri', bri)">Brightness</input>
+   <rzslider rz-slider-model="briSlider.value" rz-slider-options="briSlider.options"></rzslider>
    <input type="checkbox" ng-model="on" ng-change="submit('on', on)">On/off</input>
    <input type="text" ng-model="trans">Transition time</input>
   <map name="xyMap">
