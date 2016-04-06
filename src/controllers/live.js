@@ -32,7 +32,9 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
       vertical : true,
       onChange : function(sliderId, modelValue, highValue) {
         $scope.submit('bri', modelValue);
-      }
+      },
+      hidePointerLabels : true,
+      hideLimitLabels : true
     }
   }
   $scope.on = true;
