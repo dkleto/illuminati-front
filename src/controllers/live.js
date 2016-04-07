@@ -8,7 +8,6 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
   $scope.submit = function(param, value) {
     var data = {};
     data[param] = value; //TODO: Add error handling for invalid params.
-    data.transitiontime = $scope.trans;
     console.log(JSON.stringify(data));
 
     var putConfig = {timeout         : 5000, //TODO: Move this into config.
@@ -38,7 +37,6 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
     }
   }
   $scope.on = true;
-  $scope.trans = 0;
   $scope.getXy = function(event) {
     var position = event.target.getBoundingClientRect();
     var x = event.clientX - position.left;
