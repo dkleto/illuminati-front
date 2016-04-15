@@ -20,6 +20,48 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     'g' : {'x' : 0.172416, 'y' : 0.746797},
     'b' : {'x' : 0.135503, 'y' : 0.039879}
   };
+  $scope.isScheduleAdvanced = function(schedule) {
+    if (typeof schedule.cron === 'undefined') {
+      return false;
+    }
+
+    var cron = schedule.cron;
+    var cronFields = ['minute', 'hour', 'day', 'month', 'weekday'];
+
+    // Check that each cron value is defined and valid.
+    var isValidCron = function(field) {
+      if (typeof field === 'undefined') {
+        return false;
+      }
+      var cronPattern = /^[0-9\/\*,-]+$/;
+      return cronPattern.test(field);
+    };
+
+    for (var i=0; i < cronFields.length; i++) {
+      if (!isValidCron(cron[cronFields[i]])) {
+         throw new Error('Invalid cron spec ' + JSON.stringify(cron));
+      }
+    }
+
+    // Day and month fields should be '*' for simple cron.
+    if (cron.day != '*' || cron.month != '*') {
+      return true;
+    }
+
+    // Min and hour should be numeric for simple cron.
+    var numPattern = /^[0-9][0-9]?$/;
+    if (!numPattern.test(cron.minute) || !numPattern.test(cron.hour)) {
+      return true;
+    };
+
+    // Weekday field should be '*' or look like 1,6,7 for simple cron.
+    var weekPattern = /^(\*|[0-7](,[0-7])*)$/;
+    if (!weekPattern.test(cron.weekday)) {
+      return true;
+    }
+
+    return false;
+  };
   $scope.getSchedColor = function(schedule) {
     var color = '#FFFFFF';
     var xy = schedule['xy'];
