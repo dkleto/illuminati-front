@@ -8,13 +8,13 @@
     <div class="schedule" ng-style="getSchedColor(schedule)">
       <ul>
         <li>
+          {{schedule.label}}<br>
+        </li>
+        <li>
           Time: {{schedule.time}}
         </li>
         <li>
           Cron: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
-        </li>
-        <li>
-          Label: {{schedule.label}}
         </li>
         <li>
           Light state: {{schedule.on}}
