@@ -26,65 +26,52 @@ describe('schedule controller', function() {
     });
   });
 
- describe('isScheduleAdvanced', function() {
-   it('should return false if cron property is not set', function() {
-      expect(scope.isScheduleAdvanced({'nothing' : 'nothing'})).toBeFalsy();
-   });
+ describe('isCronAdvanced', function() {
    it('should throw an exception for invalid cron values', function() {
       // Invalid hour spec.
-      var invalidCron = {'cron' :
-                            {'minute' : '*',
-                             'hour'   : 'notValid',
-                             'day'    : '*',
-                             'month'  : '*',
-                             'weekday': '*'}
-                        };
-      expect(function() {scope.isScheduleAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron.cron)));
+      var invalidCron = {'minute' : '*',
+                         'hour'   : 'notValid',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
+      expect(function() {scope.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
 
       // Missing minute value.
-      var invalidCron = {'cron' :
-                             {'hour'  : '*',
-                              'day'    : '*',
-                              'month'  : '*',
-                              'weekday': '*'}
-                        };
-      expect(function() {scope.isScheduleAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron.cron)));
+      var invalidCron = {'hour'  : '*',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
+      expect(function() {scope.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
    });
 
    it('should return false for straightforward cron spec', function() {
-      var simpleCron = {'cron' :
-                             {'minute'   : '30',
-                              'hour'   : '9',
-                              'day'    : '*',
-                              'month'  : '*',
-                              'weekday': '6,7'}
-                        };
+      var simpleCron = {'minute'   : '30',
+                        'hour'   : '9',
+                        'day'    : '*',
+                        'month'  : '*',
+                        'weekday': '6,7'};
 
-      expect(scope.isScheduleAdvanced(simpleCron)).toBeFalsy();
+      expect(scope.isCronAdvanced(simpleCron)).toBeFalsy();
    });
 
    it('should return true for complex cron spec', function() {
       // Try complex minute field.
-      var complexCron = {'cron' :
-                             {'minute'    : '*/5',
-                              'hour'   : '*',
-                              'day'    : '*',
-                              'month'  : '*',
-                              'weekday': '*'}
-                        };
+      var complexCron = {'minute'    : '*/5',
+                         'hour'   : '*',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
 
-      expect(scope.isScheduleAdvanced(complexCron)).toBeTruthy();
+      expect(scope.isCronAdvanced(complexCron)).toBeTruthy();
 
       // Try using anything other than '*' for month and day.
-      var complexCron = {'cron' :
-                             {'minute'    : '30',
-                              'hour'   : '2',
-                              'day'    : '20',
-                              'month'  : '3',
-                              'weekday': '*'}
-                        };
+      var complexCron = {'minute'    : '30',
+                         'hour'   : '2',
+                         'day'    : '20',
+                         'month'  : '3',
+                         'weekday': '*'};
 
-      expect(scope.isScheduleAdvanced(complexCron)).toBeTruthy();
+      expect(scope.isCronAdvanced(complexCron)).toBeTruthy();
    });
  });
 });

@@ -20,28 +20,26 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     'g' : {'x' : 0.172416, 'y' : 0.746797},
     'b' : {'x' : 0.135503, 'y' : 0.039879}
   };
-  $scope.isScheduleAdvanced = function(schedule) {
-    if (typeof schedule.cron === 'undefined') {
-      return false;
-    }
-
-    var cron = schedule.cron;
-    var cronFields = ['minute', 'hour', 'day', 'month', 'weekday'];
-
-    // Check that each cron value is defined and valid.
-    var isValidCron = function(field) {
-      if (typeof field === 'undefined') {
+  $scope.isValidCronField = function(cronField) {
+      if (typeof cronField === 'undefined') {
         return false;
       }
-      var cronPattern = /^[0-9\/\*,-]+$/;
-      return cronPattern.test(field);
-    };
+      return /^[0-9\/\*,-]+$/.test(cronField);
+  };
+  $scope.isValidCron = function(cron, cronTestFunc) {
+    var cronFields = ['minute', 'hour', 'day', 'month', 'weekday'];
 
+    // Check each cron value using cronTestFunc function.
     for (var i=0; i < cronFields.length; i++) {
-      if (!isValidCron(cron[cronFields[i]])) {
+      if (!cronTestFunc(cron[cronFields[i]])) {
          throw new Error('Invalid cron spec ' + JSON.stringify(cron));
       }
     }
+    return true;
+  }
+  $scope.isCronAdvanced = function(cron) {
+
+    $scope.isValidCron(cron, $scope.isValidCronField);
 
     // Day and month fields should be '*' for simple cron.
     if (cron.day != '*' || cron.month != '*') {
