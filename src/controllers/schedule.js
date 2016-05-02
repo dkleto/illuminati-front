@@ -32,14 +32,16 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     // Check each cron value using cronTestFunc function.
     for (var i=0; i < cronFields.length; i++) {
       if (!cronTestFunc(cron[cronFields[i]])) {
-         throw new Error('Invalid cron spec ' + JSON.stringify(cron));
+        return false;
       }
     }
     return true;
   }
   $scope.isCronAdvanced = function(cron) {
 
-    $scope.isValidCron(cron, $scope.isValidCronField);
+    if (!$scope.isValidCron(cron, $scope.isValidCronField)) {
+      throw new Error('Invalid cron spec ' + JSON.stringify(cron));
+    };
 
     // Day and month fields should be '*' for simple cron.
     if (cron.day != '*' || cron.month != '*') {
