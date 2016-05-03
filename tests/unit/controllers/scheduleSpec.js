@@ -26,6 +26,24 @@ describe('schedule controller', function() {
     });
   });
 
+ describe('getCronWeekdays', function() {
+   it('should generate an object representing a weekday schedule', function() {
+     var result = {'mon' : true,
+                   'tue' : true,
+                   'wed' : true,
+                   'thu' : true,
+                   'fri' : true,
+                   'sat' : false,
+                   'sun' : false};
+     var cron = {'minute' : '30',
+                 'hour'   : '8',
+                 'day'    : '*',
+                 'month'  : '*',
+                 'weekday': '1,2,3,4,5'};
+     expect(scope.getCronWeekdays(cron)).toEqual(result);
+   });
+ });
+
  describe('isCronAdvanced', function() {
    it('should throw an exception for invalid cron values', function() {
       // Invalid hour spec.

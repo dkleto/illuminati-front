@@ -20,15 +20,33 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     'g' : {'x' : 0.172416, 'y' : 0.746797},
     'b' : {'x' : 0.135503, 'y' : 0.039879}
   };
-  $scope.isValidCronField = function(cronField) {
-      if (typeof cronField === 'undefined') {
-        return false;
+  $scope.getCronWeekdays = function(cron) {
+    if ($scope.isCronAdvanced(cron)) {
+      return false;
+    } else {
+      // Set up array to map weekdays to integer values.
+      var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+      var cronSpec = cron['weekday'].split(',');
+      var result = {};
+      // Set all weekdays in result to false.
+      for (var i=1; i < days.length; i++) {
+        result[days[i]] = false;
       }
-      return /^[0-9\/\*,-]+$/.test(cronField);
+      // Iterate through selected weekdays and set them to true in result.
+      for (var i=0; i < cronSpec.length; i++) {
+        result[days[cronSpec[i]]] = true;
+      }
+      return result;
+    }
+  };
+  $scope.isValidCronField = function(cronField) {
+    if (typeof cronField === 'undefined') {
+      return false;
+    }
+    return /^[0-9\/\*,-]+$/.test(cronField);
   };
   $scope.isValidCron = function(cron, cronTestFunc) {
     var cronFields = ['minute', 'hour', 'day', 'month', 'weekday'];
-
     // Check each cron value using cronTestFunc function.
     for (var i=0; i < cronFields.length; i++) {
       if (!cronTestFunc(cron[cronFields[i]])) {
