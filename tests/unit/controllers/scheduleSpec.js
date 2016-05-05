@@ -70,6 +70,15 @@ describe('schedule controller', function() {
                         'weekday': '6,7'};
 
       expect(scope.isCronAdvanced(simpleCron)).toBeFalsy();
+
+      // Test schedule for every weekday.
+      var simpleCron = {'minute'   : '30',
+                        'hour'   : '9',
+                        'day'    : '*',
+                        'month'  : '*',
+                        'weekday': '*'};
+
+      expect(scope.isCronAdvanced(simpleCron)).toBeFalsy();
    });
 
    it('should return true for complex cron spec', function() {

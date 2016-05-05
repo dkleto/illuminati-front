@@ -7,6 +7,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
   $http.get(config.apiUrl + '/schedules')
     .success(function(data) {
       $scope.schedules = data;
+      for (var i=0; i < $scope.schedules.length; i++) {
+        var schedule = $scope.schedules[i];
+        schedule.weekdays = $scope.getCronWeekdays(schedule.cron);
+        console.log(JSON.stringify(schedule.weekdays));
+      }
     })
     .error(function(data, status) {
     });
@@ -26,7 +31,14 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     } else {
       // Set up array to map weekdays to integer values.
       var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-      var cronSpec = cron['weekday'].split(',');
+
+      // For "*" we will set all weekdays true.
+      if (cron['weekday'] === '*') {
+        var cronSpec = [1,2,3,4,5,6,7];
+      } else {
+        var cronSpec = cron['weekday'].split(',');
+      }
+
       var result = {};
       // Set all weekdays in result to false.
       for (var i=1; i < days.length; i++) {
@@ -73,7 +85,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', f
     };
 
     // Weekday field should be '*' or look like 1,6,7 for simple cron.
-    var weekPattern = /^(\*|[0-7](,[0-7])*)$/;
+    var weekPattern = /^\*|([0-7](,[0-7])*)$/;
     if (!weekPattern.test(cron.weekday)) {
       return true;
     }
