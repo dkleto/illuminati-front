@@ -14,9 +14,6 @@
           Time: {{schedule.time}}
         </li>
         <li>
-          Cron: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
-        </li>
-        <li>
           Light state: {{schedule.on}}
         </li>
         <li>
@@ -24,6 +21,12 @@
         </li>
         <li>
           XY: {{schedule.xy}}
+        </li>
+        <li ng-if="!isCronAdvanced(schedule.cron)">
+          <span ng-repeat="(key, value) in schedule.weekdays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
+        </li>
+        <li ng-if="isCronAdvanced(schedule.cron)">
+          Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
         </li>
       </ul>
     </div>
