@@ -10,7 +10,7 @@
         <li>
           {{schedule.label}}<br>
         </li>
-        <li>
+        <li ng-if="typeof schedule.time !=== 'undefined'">
           Time: {{schedule.time}}
         </li>
         <li>
