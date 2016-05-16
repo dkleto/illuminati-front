@@ -5,7 +5,8 @@ var illuminati = angular.module('illuminati', [
     'scheduleCtrl',
     'liveCtrl',
     'illuminatiServices',
-    'rzModule'
+    'rzModule',
+    'ui.router'
 ]);
 
 illuminati.config(['$routeProvider',
