@@ -8,6 +8,26 @@ html {
 h1 {
   font-size: 1.5em;
 }
+/** Modal overlay **/
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+}
+.schedule-edit {
+  z-index: 11;
+  width: 25em;
+  height: 15em;
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  background-color: #eeeeee;
+  padding: 0.5em;
+}
 .titleBar {
   height: 3.5em;
 }
