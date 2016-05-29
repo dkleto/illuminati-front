@@ -3,6 +3,7 @@
 var illuminati = angular.module('illuminati', [
     'scheduleCtrl',
     'liveCtrl',
+    'editCtrl',
     'illuminatiServices',
     'rzModule',
     'ui.router'
@@ -20,7 +21,7 @@ illuminati.config(['$stateProvider', '$urlRouterProvider',
             .state('schedules.new', {
                 url: '/new',
                 templateUrl: 'partials/schedule-edit.html',
-                controller: 'liveCtrl'
+                controller: 'editCtrl'
             })
         .state('live', {
             url: '/live',
