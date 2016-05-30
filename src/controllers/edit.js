@@ -36,6 +36,8 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$http', 'config', 'Color', '$win
       hideLimitLabels : true
     }
   };
+  $scope.hour = 15;
+  $scope.minute = 0;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.5, 1);
   $scope.setXy = function(point) {
