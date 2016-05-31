@@ -38,6 +38,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$http', 'config', 'Color', '$win
   };
   $scope.hour = 15;
   $scope.minute = 0;
+  $scope.repeat = false;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.5, 1);
   $scope.setXy = function(point) {
