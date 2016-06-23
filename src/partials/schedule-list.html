@@ -23,10 +23,10 @@
         <li>
           XY: {{schedule.xy}}
         </li>
-        <li ng-if="!isCronAdvanced(schedule.cron)">
+        <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
           <span ng-repeat="(key, value) in schedule.weekdays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
         </li>
-        <li ng-if="isCronAdvanced(schedule.cron)">
+        <li ng-if="Cron.isCronAdvanced(schedule.cron)">
           Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
         </li>
       </ul>

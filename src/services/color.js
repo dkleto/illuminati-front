@@ -1,6 +1,6 @@
 'use strict';
 
-var color = angular.module('illuminatiServices', []);
+var color = angular.module('illuminatiColorService', []);
 
 color.factory('Color', [function() {
   var color = {};

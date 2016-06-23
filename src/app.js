@@ -4,7 +4,8 @@ var illuminati = angular.module('illuminati', [
     'scheduleCtrl',
     'liveCtrl',
     'editCtrl',
-    'illuminatiServices',
+    'illuminatiColorService',
+    'illuminatiCronService',
     'rzModule',
     'ui.router'
 ]);
