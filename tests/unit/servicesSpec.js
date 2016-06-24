@@ -2,11 +2,12 @@
 
 describe('illuminati services', function() {
 
-  var Color, gamutB, wideGamut;
+  var Color, Cron, gamutB, wideGamut;
   beforeEach(module('illuminati'));
   beforeEach(function() {
     inject(function($injector) {
       Color = $injector.get('Color');
+      Cron = $injector.get('Cron');
     });
     gamutB = {
       'r' : {'x' : 0.675, 'y' : 0.322},
@@ -105,6 +106,7 @@ describe('illuminati services', function() {
       expect(Color.distanceBetweenPoints(p1, p2).toFixed(3)).toEqual('0.283');
     });
   });
+
   describe('closestPointInGamut', function(){
     it('should determine closest point within gamut', function() {
       // Test with point immediately above green vertex.
@@ -115,6 +117,7 @@ describe('illuminati services', function() {
       expect(Color.closestPointInGamut(p, gamutB)).toEqual(gamutB.r);
     });
   });
+
   describe('mapXyToGamut', function(){
     it('should map xy coordinates onto provided gamut', function() {
       // Helper function to round resulting xy points.
@@ -132,4 +135,80 @@ describe('illuminati services', function() {
       expect(roundPoint(Color.mapXyToGamut(xy, gamutB))).toEqual(gamutB.r);
     });
   });
+
+ describe('getCronWeekdays', function() {
+   it('should generate an object representing a weekday schedule', function() {
+     var result = {'mon' : true,
+                   'tue' : true,
+                   'wed' : true,
+                   'thu' : true,
+                   'fri' : true,
+                   'sat' : false,
+                   'sun' : false};
+     var cron = {'minute' : '30',
+                 'hour'   : '8',
+                 'day'    : '*',
+                 'month'  : '*',
+                 'weekday': '1,2,3,4,5'};
+     expect(Cron.getCronWeekdays(cron)).toEqual(result);
+   });
+ });
+
+ describe('isCronAdvanced', function() {
+   it('should throw an exception for invalid cron values', function() {
+      // Invalid hour spec.
+      var invalidCron = {'minute' : '*',
+                         'hour'   : 'notValid',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
+      expect(function() {Cron.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
+
+      // Missing minute value.
+      var invalidCron = {'hour'  : '*',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
+      expect(function() {Cron.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
+   });
+
+   it('should return false for straightforward cron spec', function() {
+      var simpleCron = {'minute'   : '30',
+                        'hour'   : '9',
+                        'day'    : '*',
+                        'month'  : '*',
+                        'weekday': '6,7'};
+
+      expect(Cron.isCronAdvanced(simpleCron)).toBeFalsy();
+
+      // Test schedule for every weekday.
+      var simpleCron = {'minute'   : '30',
+                        'hour'   : '9',
+                        'day'    : '*',
+                        'month'  : '*',
+                        'weekday': '*'};
+
+      expect(Cron.isCronAdvanced(simpleCron)).toBeFalsy();
+   });
+
+   it('should return true for complex cron spec', function() {
+      // Try complex minute field.
+      var complexCron = {'minute'    : '*/5',
+                         'hour'   : '*',
+                         'day'    : '*',
+                         'month'  : '*',
+                         'weekday': '*'};
+
+      expect(Cron.isCronAdvanced(complexCron)).toBeTruthy();
+
+      // Try using anything other than '*' for month and day.
+      var complexCron = {'minute'    : '30',
+                         'hour'   : '2',
+                         'day'    : '20',
+                         'month'  : '3',
+                         'weekday': '*'};
+
+      expect(Cron.isCronAdvanced(complexCron)).toBeTruthy();
+   });
+ });
 });
