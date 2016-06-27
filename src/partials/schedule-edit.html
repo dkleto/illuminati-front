@@ -8,6 +8,9 @@
   <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
   <input type="number" min="0" max="23" ng-model="hour"/>
   <input type="number" min="0" max="59" ng-model="minute"/>
-  <input type="checkbox" ng-model="repeat">Repeat</input>
-  <div ng-if="repeat"></div>
+  <input type="checkbox" ng-model="repeated">Repeat</input>
+  <div ng-if="repeated">
+    <span ng-repeat="(key, value) in cron"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
+  </div>
+  <button>Save</button>
 </div>

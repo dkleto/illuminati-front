@@ -38,6 +38,13 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$http', 'config', 'Color', '$win
   };
   $scope.hour = 15;
   $scope.minute = 0;
+  $scope.cron = {'mon' : true,
+                 'tue' : true,
+                 'wed' : true,
+                 'thu' : true,
+                 'fri' : true,
+                 'sat' : true,
+                 'sun' : true};
   $scope.repeat = false;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.5, 1);
