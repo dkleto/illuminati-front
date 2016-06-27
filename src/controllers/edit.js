@@ -79,4 +79,12 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$http', 'config', 'Color', '$win
     $scope.y = 1 - y / height;
     return Color.xyPoint($scope.x, $scope.y);
   };
+  $scope.dayClass = function(enabled) {
+    return enabled ? 'dayOn' : 'dayOff';
+  };
+  $scope.toggleDay = function(day) {
+    if (typeof $scope.cron[day] === 'boolean') {
+      $scope.cron[day] = !$scope.cron[day];
+    }
+  };
 }]);
