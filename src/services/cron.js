@@ -94,7 +94,7 @@ cron.factory('Cron', [function() {
 
     // Convert the weekday array into a cron string.
     if (result.length === 0) {
-      return false;
+      throw new Error('Invalid cron spec - no weekdays enabled.');
     } else if (result.length === 7) {
       return '*';
     } else {

@@ -249,7 +249,7 @@ describe('illuminati services', function() {
         .toThrow(new Error(err));
    });
 
-   it('should return false if no weekdays are set', function() {
+   it('should throw an error if no weekdays are set', function() {
      var noDays = {'mon' : false,
                    'tue' : false,
                    'wed' : false,
@@ -257,7 +257,9 @@ describe('illuminati services', function() {
                    'fri' : false,
                    'sat' : false,
                    'sun' : false};
-     expect(Cron.getCronFromWeekdays(noDays)).toEqual(false);
+     var err = 'Invalid cron spec - no weekdays enabled.';
+     expect(function() {Cron.getCronFromWeekdays(noDays);})
+        .toThrow(new Error(err));
    });
 
    it('should convert weekday mapping into valid cron string', function() {
