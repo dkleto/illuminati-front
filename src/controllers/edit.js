@@ -2,8 +2,9 @@
 
 var scheduleCtrl = angular.module('editCtrl', ['illuminati-conf', 'rzModule']);
 
-scheduleCtrl.controller('editCtrl', ['$scope', '$http', 'config', 'Color', '$window', function($scope, $http, config, Color, $window) {
+scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http', 'config', 'Color', 'Cron', '$window', function($scope, $stateParams, $state, $http, config, Color, Cron, $window) {
   // Prevent images (e.g. color triangle) from being draggable.
+  //
   $window.ondragstart = function() {return false;};
   $scope.submit = function(param, value) {
     var data = {};
