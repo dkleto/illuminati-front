@@ -70,9 +70,12 @@ describe('illuminati services', function() {
 
     it('should throw an error for invalid xy values', function() {
       var noxy = {};
-      expect(function() {Color.xyPoint(noxy['x'],noxy['y']);}).toThrow(new Error('"undefined" is not an integer'));
-      expect(function() {Color.xyPoint('NaN',2);}).toThrow(new Error('"NaN" is not an integer'));
-      expect(function() {Color.xyPoint(-2,2);}).toThrow(new Error('"-2" is not an integer between -1 and 1'));
+      expect(function() {Color.xyPoint(noxy['x'],noxy['y']);})
+        .toThrow(new Error('"undefined" is not an integer'));
+      expect(function() {Color.xyPoint('NaN',2);})
+        .toThrow(new Error('"NaN" is not an integer'));
+      expect(function() {Color.xyPoint(-2,2);})
+        .toThrow(new Error('"-2" is not an integer between -1 and 1'));
     });
   });
 
@@ -162,14 +165,16 @@ describe('illuminati services', function() {
                          'day'    : '*',
                          'month'  : '*',
                          'weekday': '*'};
-      expect(function() {Cron.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
+      expect(function() {Cron.isCronAdvanced(invalidCron);})
+        .toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
 
       // Missing minute value.
       var invalidCron = {'hour'  : '*',
                          'day'    : '*',
                          'month'  : '*',
                          'weekday': '*'};
-      expect(function() {Cron.isCronAdvanced(invalidCron);}).toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
+      expect(function() {Cron.isCronAdvanced(invalidCron);})
+        .toThrow(new Error('Invalid cron spec ' + JSON.stringify(invalidCron)));
    });
 
    it('should return false for straightforward cron spec', function() {
