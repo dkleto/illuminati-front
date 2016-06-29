@@ -72,6 +72,35 @@ cron.factory('Cron', [function() {
 
     return false;
   };
-  
+  cron.getCronFromWeekdays = function(weekdays) {
+    var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    if (typeof weekdays !== 'object') {
+      throw new Error('Weekdays param must be object');
+    }
+
+    // Construct an array of weekday index values.
+    var result = [];
+    for (var i=0; i < days.length; i++) {
+       var type = typeof weekdays[days[i]];
+       if (type !== 'boolean') {
+         var err = 'Invalid weekday value for \'' + days[i] +
+                   '\' expected boolean but got \'' + type + '\'.';
+         throw new Error(err);
+       }
+       if (weekdays[days[i]]) {
+         result.push(i + 1);
+       }
+    }
+
+    // Convert the weekday array into a cron string.
+    if (result.length === 0) {
+      return false;
+    } else if (result.length === 7) {
+      return '*';
+    } else {
+      return result.join();
+    }
+  };
+
   return cron;
 }]);

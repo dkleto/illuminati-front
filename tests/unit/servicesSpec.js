@@ -216,4 +216,70 @@ describe('illuminati services', function() {
       expect(Cron.isCronAdvanced(complexCron)).toBeTruthy();
    });
  });
+ describe('getCronFromWeekdays', function() {
+   it('should throw an error if weekdays param is not an object', function() {
+     expect(function() {Cron.getCronFromWeekdays('notObj');})
+        .toThrow(new Error('Weekdays param must be object'));
+   });
+
+   it('should throw an error for missing day values', function() {
+     var missingMon = {'tue' : true,
+                       'wed' : false,
+                       'thu' : true,
+                       'fri' : false,
+                       'sat' : false,
+                       'sun' : true};
+     var err = 'Invalid weekday value for \'mon\'' +
+            ' expected boolean but got \'undefined\'.';
+     expect(function() {Cron.getCronFromWeekdays(missingMon);})
+        .toThrow(new Error(err));
+   });
+
+   it('should throw an error for non-boolean day value', function() {
+     var nonBoolTue = {'mon' : true,
+                       'tue' : 'notBoolean',
+                       'wed' : true,
+                       'thu' : true,
+                       'fri' : true,
+                       'sat' : true,
+                       'sun' : true};
+     var err = 'Invalid weekday value for \'tue\'' +
+            ' expected boolean but got \'string\'.';
+     expect(function() {Cron.getCronFromWeekdays(nonBoolTue);})
+        .toThrow(new Error(err));
+   });
+
+   it('should return false if no weekdays are set', function() {
+     var noDays = {'mon' : false,
+                   'tue' : false,
+                   'wed' : false,
+                   'thu' : false,
+                   'fri' : false,
+                   'sat' : false,
+                   'sun' : false};
+     expect(Cron.getCronFromWeekdays(noDays)).toEqual(false);
+   });
+
+   it('should convert weekday mapping into valid cron string', function() {
+     // Test  enabled days.
+     var everyDay = {'mon' : true,
+                    'tue' : true,
+                    'wed' : true,
+                    'thu' : true,
+                    'fri' : true,
+                    'sat' : true,
+                    'sun' : true};
+     expect(Cron.getCronFromWeekdays(everyDay)).toEqual('*');
+
+     // Test alternating enabled days.
+     var altDays = {'mon' : true,
+                    'tue' : false,
+                    'wed' : true,
+                    'thu' : false,
+                    'fri' : true,
+                    'sat' : false,
+                    'sun' : true};
+     expect(Cron.getCronFromWeekdays(altDays)).toEqual('1,3,5,7');
+   });
+ });
 });
