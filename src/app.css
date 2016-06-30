@@ -57,6 +57,9 @@ div.liveContent {
   height: 15em;
   padding: 2em;
 }
+.scheduleEdit .day {
+  cursor: pointer;
+}
 .scheduleEdit .dayOn {
   background-color: #FFFFFF;
 }
