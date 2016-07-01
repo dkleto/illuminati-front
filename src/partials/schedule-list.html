@@ -30,9 +30,10 @@
           Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
         </li>
       </ul>
+      <button ng-click="delSchedule(schedule['_id']['$oid'])">Delete</button>
     </div>
   </div>
   <div>
-    <a ui-sref="schedules.new">Create new schedule</a>
+    <a ui-sref="schedules.new({action: 'create'})">Create new schedule</a>
   </div>
 </div>

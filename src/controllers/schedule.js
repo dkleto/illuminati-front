@@ -4,16 +4,19 @@ var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
 scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', function($scope, $http, config, Color, Cron) {
 
-  $http.get(config.apiUrl + '/schedules')
-    .success(function(data) {
-      $scope.schedules = data;
-      for (var i=0; i < $scope.schedules.length; i++) {
-        var schedule = $scope.schedules[i];
-        schedule.weekdays = Cron.getCronWeekdays(schedule.cron);
-      }
-    })
-    .error(function(data, status) {
-    });
+  $scope.syncList = function() {
+    $http.get(config.apiUrl + '/schedules')
+      .success(function(data) {
+        $scope.schedules = data;
+        for (var i=0; i < $scope.schedules.length; i++) {
+          var schedule = $scope.schedules[i];
+          schedule.weekdays = Cron.getCronWeekdays(schedule.cron);
+        }
+      })
+      .error(function(data, status) {
+      });
+  };
+  $scope.syncList();
   $scope.gamut = {
     'r' : {'x' : 0.675, 'y' : 0.322},
     'g' : {'x' : 0.409, 'y' : 0.518},
@@ -42,5 +45,17 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       throw new Error('XY has incorrect type: "' + typeof xy + '"');
     }
     return {'background-color' : color};
+  };
+  $scope.delSchedule = function(id) {
+    $http.delete(config.apiUrl + '/schedule/' + id)
+      .success(function(data) {
+        console.log('Schedule "' + id + '" deleted.');
+        $scope.syncList();
+      })
+      .error(function(data, status) {
+        var err = 'Failed deleting schedule "' + id + '". HTTP code: '
+                  + status;
+        console.log(err);
+      });
   };
 }]);
