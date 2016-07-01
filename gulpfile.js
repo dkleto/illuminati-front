@@ -30,6 +30,10 @@ gulp.task('replace', function () {
         {
           match: 'apiUrl',
           replacement: conf.apiUrl
+        },
+        {
+          match: 'timeout',
+          replacement: conf.timeout
         }
       ]
     }))

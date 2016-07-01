@@ -10,7 +10,7 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
     data[param] = value; //TODO: Add error handling for invalid params.
     console.log(JSON.stringify(data));
 
-    var putConfig = {timeout         : 5000, //TODO: Move this into config.
+    var putConfig = {timeout         : config.timeout,
                      params          : data,
                      paramSerializer : '$httpParamSerializerJQLike'};
 
