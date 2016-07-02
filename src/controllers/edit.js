@@ -37,6 +37,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       hideLimitLabels : true
     }
   };
+  $scope.label = '';
   $scope.hour = 15;
   $scope.minute = 0;
   $scope.cron = {'mon' : true,
@@ -97,6 +98,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       var request = {};
       var wdF = Cron.weekdayArrFromObj;
       request.xy = $scope.xy;
+      request.label = $scope.label;
       request.cron = {'minute' : $scope.minute,
                       'hour'   : $scope.hour,
                       'day'    : '*',
