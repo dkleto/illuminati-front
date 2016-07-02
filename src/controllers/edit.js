@@ -92,4 +92,33 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       }
     }
   };
+  $scope.saveSchedule = function() {
+    if ($state.is('schedules.new')) {
+      var request = {};
+      var wdF = Cron.weekdayArrFromObj;
+      request.xy = $scope.xy;
+      request.cron = {'minute' : $scope.minute,
+                      'hour'   : $scope.hour,
+                      'day'    : '*',
+                      'month'  : '*',
+                      'weekday': Cron.getCronFromWeekdays($scope.cron, wdF)};
+      var postConfig = {timeout : config.timeout};
+      $http.post(config.apiUrl + '/schedule', request, postConfig)
+        .success(function(data) {
+          var success = 'Schedule created with ID: "' + data['_id']['$oid'];
+          console.log(success);
+        })
+        .error(function(data, status) {
+          var err = 'Failed creating schedule. HTTP code: ' + status + ' ' +
+                    'Request data: ' + JSON.stringify(data);
+          console.log(err);
+        });
+    }
+    // Close edit modal and return to schedules list.
+    $state.go('^')
+      .then(function() {
+          // Reload schedules list after state change.
+          $scope.syncList();
+      });
+  };
 }]);
