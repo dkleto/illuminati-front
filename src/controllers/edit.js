@@ -25,7 +25,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   };
   $scope.bri = 255;
   $scope.briSlider = {
-    value : 255,
+    value : $scope.bri,
     options : {
       floor : 0,
       ceil : 255,
@@ -85,7 +85,11 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   };
   $scope.toggleDay = function(day) {
     if (typeof $scope.cron[day] === 'boolean') {
-      $scope.cron[day] = !$scope.cron[day];
+      var weekdayLength = Cron.weekdayArrFromObj($scope.cron).length;
+      // Prevent the user from turning off all week days.
+      if (!(weekdayLength < 2 && $scope.cron[day])) {
+        $scope.cron[day] = !$scope.cron[day];
+      }
     }
   };
 }]);
