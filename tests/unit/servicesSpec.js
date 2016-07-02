@@ -216,12 +216,7 @@ describe('illuminati services', function() {
       expect(Cron.isCronAdvanced(complexCron)).toBeTruthy();
    });
  });
- describe('getCronFromWeekdays', function() {
-   it('should throw an error if weekdays param is not an object', function() {
-     expect(function() {Cron.getCronFromWeekdays('notObj');})
-        .toThrow(new Error('Weekdays param must be object'));
-   });
-
+ describe('weekdayArrFromObj', function() {
    it('should throw an error for missing day values', function() {
      var missingMon = {'tue' : true,
                        'wed' : false,
@@ -231,11 +226,11 @@ describe('illuminati services', function() {
                        'sun' : true};
      var err = 'Invalid weekday value for \'mon\'' +
             ' expected boolean but got \'undefined\'.';
-     expect(function() {Cron.getCronFromWeekdays(missingMon);})
+     expect(function() {Cron.weekdayArrFromObj(missingMon);})
         .toThrow(new Error(err));
    });
 
-   it('should throw an error for non-boolean day value', function() {
+   it('should throw an error for non-boolean day values', function() {
      var nonBoolTue = {'mon' : true,
                        'tue' : 'notBoolean',
                        'wed' : true,
@@ -245,8 +240,18 @@ describe('illuminati services', function() {
                        'sun' : true};
      var err = 'Invalid weekday value for \'tue\'' +
             ' expected boolean but got \'string\'.';
-     expect(function() {Cron.getCronFromWeekdays(nonBoolTue);})
+     expect(function() {Cron.weekdayArrFromObj(nonBoolTue);})
         .toThrow(new Error(err));
+   });
+ });
+ describe('getCronFromWeekdays', function() {
+   var wdFunc;
+   beforeEach(function() {
+     wdFunc = Cron.weekdayArrFromObj;
+   });
+   it('should throw an error if weekdays param is not an object', function() {
+     expect(function() {Cron.getCronFromWeekdays('notObj', wdFunc);})
+        .toThrow(new Error('Weekdays param must be object'));
    });
 
    it('should throw an error if no weekdays are set', function() {
@@ -258,7 +263,7 @@ describe('illuminati services', function() {
                    'sat' : false,
                    'sun' : false};
      var err = 'Invalid cron spec - no weekdays enabled.';
-     expect(function() {Cron.getCronFromWeekdays(noDays);})
+     expect(function() {Cron.getCronFromWeekdays(noDays, wdFunc);})
         .toThrow(new Error(err));
    });
 
@@ -271,7 +276,7 @@ describe('illuminati services', function() {
                     'fri' : true,
                     'sat' : true,
                     'sun' : true};
-     expect(Cron.getCronFromWeekdays(everyDay)).toEqual('*');
+     expect(Cron.getCronFromWeekdays(everyDay, wdFunc)).toEqual('*');
 
      // Test alternating enabled days.
      var altDays = {'mon' : true,
@@ -281,7 +286,7 @@ describe('illuminati services', function() {
                     'fri' : true,
                     'sat' : false,
                     'sun' : true};
-     expect(Cron.getCronFromWeekdays(altDays)).toEqual('1,3,5,7');
+     expect(Cron.getCronFromWeekdays(altDays, wdFunc)).toEqual('1,3,5,7');
    });
  });
 });
