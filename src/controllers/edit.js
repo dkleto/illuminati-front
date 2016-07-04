@@ -157,14 +157,16 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
         });
     } else if ($state.is('schedules.edit')) {
       var putConfig = {timeout : config.timeout};
-      $http.put(config.apiUrl + '/schedule/' + $stateParams['scheduleid'], request, putConfig)
+      var url = config.apiUrl + '/schedule/' + $stateParams['scheduleid'];
+      $http.put(url, request, putConfig)
         .success(function(data) {
-          var success = 'Schedule with ID: "' + data['_id']['$oid'] + '" updated.';
+          var success = 'Schedule "' + data['_id']['$oid'] + '" updated.';
           console.log(success);
         })
         .error(function(data, status) {
-          var err = 'Failed updating schedule "' + $stateParams['scheduleid'] + '". HTTP code: ' + status + ' ' +
-                    'Request data: ' + JSON.stringify(data);
+          var err = 'Failed updating schedule "' + $stateParams['scheduleid'] +
+                    '". HTTP code: ' + status + ' ' + 'Request data: ' +
+                    JSON.stringify(data);
           console.log(err);
         });
     }
