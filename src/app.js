@@ -24,6 +24,11 @@ illuminati.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: 'partials/schedule-edit.html',
                 controller: 'editCtrl'
             })
+            .state('schedules.edit', {
+                url: '/edit/{scheduleid:[0-9a-fA-Z]{24}}',
+                templateUrl: 'partials/schedule-edit.html',
+                controller: 'editCtrl'
+            })
         .state('live', {
             url: '/live',
             templateUrl: 'partials/live.html',

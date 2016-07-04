@@ -8,6 +8,21 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   $window.ondragstart = function() {return false;};
 
   $scope.bri = 255;
+  $scope.alert = 'none';
+  $scope.label = '';
+  $scope.hour = 12;
+  $scope.minute = 0;
+  $scope.repeat = false;
+  $scope.on = true;
+  $scope.xy = Color.xyPoint(0.5, 1);
+  $scope.tranTime= 0;
+  $scope.weekDay = {'mon' : true,
+                 'tue' : true,
+                 'wed' : true,
+                 'thu' : true,
+                 'fri' : true,
+                 'sat' : true,
+                 'sun' : true};
   $scope.briSlider = {
     value : $scope.bri,
     options : {
@@ -15,25 +30,62 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       ceil : 255,
       vertical : true,
       onEnd : function(sliderId, modelValue, highValue) {
-        $scope.submit('bri', modelValue);
+        $scope.bri = modelValue;
       },
       hidePointerLabels : true,
       hideLimitLabels : true
     }
   };
-  $scope.label = '';
-  $scope.hour = 15;
-  $scope.minute = 0;
-  $scope.cron = {'mon' : true,
-                 'tue' : true,
-                 'wed' : true,
-                 'thu' : true,
-                 'fri' : true,
-                 'sat' : true,
-                 'sun' : true};
-  $scope.repeat = false;
-  $scope.on = true;
-  $scope.xy = Color.xyPoint(0.5, 1);
+
+  if ($state.is('schedules.edit')) {
+    var getConfig = {timeout: config.timeout};
+    var getUrl = config.apiUrl + '/schedule/' + $stateParams['scheduleid'];
+    $http.get(getUrl, getConfig)
+      .success(function(data) {
+        var setVal = function(property, defVal, callback) {
+          if (typeof property !== 'undefined' && property !== null) {
+            if (typeof callback === 'function') {
+              return callback(property);
+            }
+            return property;
+          } else {
+            return defVal;
+          }
+        }
+        console.log(JSON.stringify(data));
+        $scope.bri = setVal(data['bri'], $scope.bri, parseInt);
+        // Make sure that brightness slider val matches model.
+        $scope.briSlider['value'] = $scope.bri;
+        $scope.label = setVal(data['label'], $scope.label);
+        $scope.on = setVal(data['on'], $scope.on);
+        $scope.xy = setVal(data['xy'], $scope.xy);
+        $scope.transTime = setVal(data['transitiontime'],
+                                  $scope.transTime,
+                                  parseInt);
+        $scope.alert = setVal(data['alert'], $scope.alert);
+        if (Cron.isCronAdvanced(data['cron'])) {
+          //TODO: Handle advanced cron specs properly.
+          console.log('Advanced cron specs not yet supported.');
+        } else {
+          $scope.minute = setVal(data['cron']['minute'],
+                                 $scope.minute,
+                                 parseInt);
+          $scope.hour = setVal(data['cron']['hour'],
+                                 $scope.hour,
+                                 parseInt);
+          $scope.weekDay = setVal(data['cron']['weekday'],
+                                  $scope.weekDay,
+                                  Cron.getCronWeekdays);
+        }
+      })
+      .error(function(data, status) {
+        var err = 'Failed fetching schedule "' + $stateParams['scheduleid'] +
+                   '" - HTTP code: ' + status;
+        console.log(err);
+      });
+
+  } else {
+  }
   $scope.setXy = function(point) {
     $scope.xy = point;
   };
@@ -69,25 +121,29 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
     return enabled ? 'dayOn' : 'dayOff';
   };
   $scope.toggleDay = function(day) {
-    if (typeof $scope.cron[day] === 'boolean') {
-      var weekdayLength = Cron.weekdayArrFromObj($scope.cron).length;
+    if (typeof $scope.weekDay[day] === 'boolean') {
+      var weekdayLength = Cron.weekdayArrFromObj($scope.weekDay).length;
       // Prevent the user from turning off all week days.
-      if (!(weekdayLength < 2 && $scope.cron[day])) {
-        $scope.cron[day] = !$scope.cron[day];
+      if (!(weekdayLength < 2 && $scope.weekDay[day])) {
+        $scope.weekDay[day] = !$scope.weekDay[day];
       }
     }
   };
   $scope.saveSchedule = function() {
+    var request = {};
+    var wdF = Cron.weekdayArrFromObj;
+    request.xy = $scope.xy;
+    request.bri = $scope.bri;
+    request.label = $scope.label;
+    request.on = $scope.on;
+    request.transitiontime = $scope.transTime;
+    request.alert = $scope.alert;
+    request.cron = {'minute' : String($scope.minute),
+                    'hour'   : String($scope.hour),
+                    'day'    : '*',
+                    'month'  : '*',
+                    'weekday': Cron.getCronFromWeekdays($scope.weekDay, wdF)};
     if ($state.is('schedules.new')) {
-      var request = {};
-      var wdF = Cron.weekdayArrFromObj;
-      request.xy = $scope.xy;
-      request.label = $scope.label;
-      request.cron = {'minute' : $scope.minute,
-                      'hour'   : $scope.hour,
-                      'day'    : '*',
-                      'month'  : '*',
-                      'weekday': Cron.getCronFromWeekdays($scope.cron, wdF)};
       var postConfig = {timeout : config.timeout};
       $http.post(config.apiUrl + '/schedule', request, postConfig)
         .success(function(data) {
@@ -96,6 +152,18 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
         })
         .error(function(data, status) {
           var err = 'Failed creating schedule. HTTP code: ' + status + ' ' +
+                    'Request data: ' + JSON.stringify(data);
+          console.log(err);
+        });
+    } else if ($state.is('schedules.edit')) {
+      var putConfig = {timeout : config.timeout};
+      $http.put(config.apiUrl + '/schedule/' + $stateParams['scheduleid'], request, putConfig)
+        .success(function(data) {
+          var success = 'Schedule with ID: "' + data['_id']['$oid'] + '" updated.';
+          console.log(success);
+        })
+        .error(function(data, status) {
+          var err = 'Failed updating schedule "' + $stateParams['scheduleid'] + '". HTTP code: ' + status + ' ' +
                     'Request data: ' + JSON.stringify(data);
           console.log(err);
         });

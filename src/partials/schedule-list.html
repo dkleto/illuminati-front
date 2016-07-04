@@ -31,6 +31,7 @@
         </li>
       </ul>
       <button ng-click="delSchedule(schedule['_id']['$oid'])">Delete</button>
+      <a ui-sref="schedules.edit({scheduleid: schedule['_id']['$oid']})">Edit</a>
     </div>
   </div>
   <div>
