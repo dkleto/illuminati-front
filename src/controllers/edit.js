@@ -6,23 +6,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   // Prevent images (e.g. color triangle) from being draggable.
   //
   $window.ondragstart = function() {return false;};
-  $scope.submit = function(param, value) {
-    var data = {};
-    data[param] = value; //TODO: Add error handling for invalid params.
-    console.log(JSON.stringify(data));
 
-    var putConfig = {timeout         : config.timeout,
-                     params          : data,
-                     paramSerializer : '$httpParamSerializerJQLike'};
-
-    $http.put(config.apiUrl + '/lights/all', '', putConfig)
-      .success(function(data) {
-        console.log('success: ' + JSON.stringify(data));
-      })
-      .error(function(data, status) {
-        console.log('error: ' + data + ' ' + status);
-      });
-  };
   $scope.bri = 255;
   $scope.briSlider = {
     value : $scope.bri,
