@@ -11,7 +11,7 @@
   <input type="number" min="0" max="59" ng-model="minute"/>
   <input type="checkbox" ng-model="repeated">Repeat</input>
   <div ng-if="repeated">
-    <span ng-repeat="(key, value) in cron">
+    <span ng-repeat="(key, value) in weekDay">
       <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(key)">
         {{key}}
       </span>
