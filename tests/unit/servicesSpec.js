@@ -289,4 +289,38 @@ describe('illuminati services', function() {
      expect(Cron.getCronFromWeekdays(altDays, wdFunc)).toEqual('1,3,5,7');
    });
  });
+ describe('getTime', function() {
+   it('should return false for invalid cron spec', function() {
+     var invalidCron = {'min'  : 'notvalid',
+                        'hour' : 'totallynotvalid'};
+     expect(Cron.getTime(invalidCron)).toBeFalsy();
+   });
+
+   it('should return false for advanced cron spec', function() {
+     var complexCron = {'minute' : '*/5',
+                        'hour'   : '*',
+                        'day'    : '*',
+                        'month'  : '*',
+                        'weekday': '*'};
+     expect(Cron.getTime(complexCron)).toBeFalsy();
+   });
+
+   it('should return time string', function() {
+     var validCron = {'minute' : '30',
+                      'hour'   : '10',
+                      'day'    : '*',
+                      'month'  : '*',
+                      'weekday': '*'};
+     expect(Cron.getTime(validCron)).toEqual('10:30');
+   });
+
+   it('should pad single digit minute and hour values', function() {
+     var validCron = {'minute' : '5',
+                      'hour'   : '9',
+                      'day'    : '*',
+                      'month'  : '*',
+                      'weekday': '*'};
+     expect(Cron.getTime(validCron)).toEqual('09:05');
+   });
+ });
 });

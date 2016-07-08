@@ -127,6 +127,29 @@ cron.factory('Cron', [function() {
       return result.join();
     }
   };
+  /**
+   * Given a cron object, return a string representing the hour and minute
+   * values as a human-readable time. Left pad single-digit minute and hour
+   * values with a zero. Return false if the cron spec is advanced or invalid.
+   *
+   * @param object cron Object representing a cron spec.
+   *
+   * @return string/false
+   */
+  cron.getTime = function(cronObj) {
+    try {
+      if (!cron.isCronAdvanced(cronObj)) {
+        var padZero = function(x) {return x.length < 2 ? '0' + x : x;};
+        return padZero(cronObj.hour) + ':' + padZero(cronObj.minute);
+      }
+    } catch(err) {
+      if (err.message.indexOf('Invalid cron spec') > -1) {
+        return false;
+      }
+      throw err;
+    }
+    return false;
+  };
 
   return cron;
 }]);
