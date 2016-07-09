@@ -16,6 +16,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       .error(function(data, status) {
       });
   };
+  $scope.cron = Cron;
   $scope.syncList();
   $scope.gamut = {
     'r' : {'x' : 0.675, 'y' : 0.322},

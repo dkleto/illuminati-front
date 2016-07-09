@@ -11,17 +11,17 @@
         <li>
           {{schedule.label}}<br>
         </li>
-        <li ng-if="typeof schedule.time !=== 'undefined'">
+        <li ng-if="schedule.time">
           Time: {{schedule.time}}
+        </li>
+        <li ng-if="cron.getTime(schedule.cron)">
+          Time: {{cron.getTime(schedule.cron)}}
         </li>
         <li>
           Light state: {{schedule.on}}
         </li>
         <li>
           Transition time: {{schedule.transitiontime}}
-        </li>
-        <li>
-          XY: {{schedule.xy}}
         </li>
         <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
           <span ng-repeat="(key, value) in schedule.weekdays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
