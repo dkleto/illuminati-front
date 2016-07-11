@@ -15,7 +15,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   $scope.repeat = false;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.5, 1);
-  $scope.tranTime= 0;
+  $scope.transTime= 0;
   $scope.weekDay = {'mon' : true,
                  'tue' : true,
                  'wed' : true,
