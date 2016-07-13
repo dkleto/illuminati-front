@@ -10,6 +10,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
         $scope.schedules = data;
         for (var i=0; i < $scope.schedules.length; i++) {
           var schedule = $scope.schedules[i];
+          schedule.timeStamp = Date.parse(schedule.creationtime);
           schedule.weekdays = Cron.getCronWeekdays(schedule.cron);
         }
       })
