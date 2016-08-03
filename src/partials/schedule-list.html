@@ -9,18 +9,21 @@
     <div class="schedule" ng-style="getSchedColor(schedule)">
       <ul>
         <li>
+          {{schedule.creationtime}}
+        </li>
+        <li class="scheduleLabel">
           {{schedule.label}}<br>
         </li>
         <li ng-if="schedule.time">
           Time: {{schedule.time}}
         </li>
-        <li ng-if="cron.getTime(schedule.cron)">
+        <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
           Time: {{cron.getTime(schedule.cron)}}
         </li>
         <li>
           Light state: {{schedule.on}}
         </li>
-        <li>
+        <li class="scheduleTransTime">
           Transition time: {{schedule.transitiontime}}
         </li>
         <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
@@ -35,6 +38,6 @@
     </div>
   </div>
   <div>
-    <a ui-sref="schedules.new({action: 'create'})">Create new schedule</a>
+    <a class="addSchedule" ui-sref="schedules.new({action: 'create'})">Create new schedule</a>
   </div>
 </div>

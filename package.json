@@ -24,7 +24,8 @@
     "karma-jasmine-matchers": "^2.0.0-beta2",
     "karma-junit-reporter": "^0.2.2",
     "karma-sourcemap-loader": "^0.3.7",
-    "protractor": "^3.2.2",
+    "protractor": "^4.0.2",
+    "selenium-webdriver": "^2.53.3",
     "shelljs": "^0.2.6",
     "sourcemap": "^0.1.0",
     "yargs": "^3.30.0"
@@ -39,7 +40,7 @@
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor e2e-tests/protractor.conf.js"
+    "protractor": "protractor tests/protractor-conf.js"
   },
   "dependencies": {
     "angular": "^1.4.7",
