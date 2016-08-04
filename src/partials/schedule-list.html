@@ -8,9 +8,6 @@
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
     <div class="schedule" ng-style="getSchedColor(schedule)">
       <ul>
-        <li>
-          {{schedule.creationtime}}
-        </li>
         <li class="scheduleLabel">
           {{schedule.label}}<br>
         </li>
