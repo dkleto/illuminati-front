@@ -77,7 +77,7 @@ cron.factory('Cron', [function() {
    * cron weekday spec.
    *
    * @param object weekdayObj Object with boolean properties
-   *                          corresponding to days of the wee
+   *                          corresponding to days of the week
    *                          ('mon', 'tue', etc.).
    * @return array            Array of index values corresponding to
    *                          weekdays with true values.
