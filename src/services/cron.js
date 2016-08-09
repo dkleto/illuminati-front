@@ -5,6 +5,15 @@ var cron = angular.module('illuminatiCronService', []);
 cron.factory('Cron', [function() {
   var cron = {};
 
+  /**
+   * Take a cron spec object and generate a weekday object which maps days
+   * of the week to boolean values. If the provided cron spec is advanced,
+   * return false.
+   *
+   * @param  object    cronInput  Object representing a cron spec.
+   *
+   * @return mixed                Weekdays object or false.
+   */
   cron.getCronWeekdays = function(cronInput) {
     if (cron.isCronAdvanced(cronInput)) {
       return false;
@@ -31,12 +40,30 @@ cron.factory('Cron', [function() {
       return result;
     }
   };
+  /**
+   * Determine if a given cron term is valid.
+   *
+   * @param  string  cronField  String representing a term in a cron spec.
+   *
+   * @return boolean            True for valid cron term, false otherwise.
+   */
   cron.isValidCronField = function(cronField) {
     if (typeof cronField === 'undefined') {
       return false;
     }
     return /^[0-9\/\*,-]+$/.test(cronField);
   };
+  /**
+   * Determine if a given cron object is a valid cron spec.
+   *
+   * @param  object  cronInput    Object with properties corresponding to cron
+   *                              spec terms.
+   * @param function cronTestFunc Function for testing validity of individual
+   *                              cron terms. Should return true for valid cron
+   *                              term and false otherwise.
+   *
+   * @return boolean              True for valid cron spec, false otherwise.
+   */
   cron.isValidCron = function(cronInput, cronTestFunc) {
     var cronFields = ['minute', 'hour', 'day', 'month', 'weekday'];
     // Check each cron value using cronTestFunc function.
@@ -47,6 +74,17 @@ cron.factory('Cron', [function() {
     }
     return true;
   }
+  /**
+   * Determine if a given cron object is valid and represents an advanced cron
+   * spec.
+   *
+   * @param  object  cronInput  Object with properties corresponding to cron
+   *                            spec terms.
+   *
+   * @return boolean            True for advanced cron spec, false otherwise.
+   *
+   * @throws Invalid cron spec
+   */
   cron.isCronAdvanced = function(cronInput) {
 
     if (!cron.isValidCron(cronInput, cron.isValidCronField)) {
