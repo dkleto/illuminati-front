@@ -152,5 +152,28 @@ color.factory('Color', [function() {
     // Add x and y vectors and translate them to point p.
     return color.xyPoint(yv.x + xv.x + p.x, yv.y + xv.y + p.y);
   };
+  color.getXy = function(height, width, x, y) {
+    var isNum = function(i) {
+      return typeof i === 'number' ? true : false;
+    };
+    var inRange = function(i, min, max) {
+      return isNum(i) && i >= min && i <= max ? true : false;
+    };
+
+    // Height, width should be non-zero and positive.
+    if (!isNum(height) || !isNum(width) || height <= 0 || width <= 0) {
+      throw new Error('Invalid height and width values - ' +
+                      'height: ' + height + 'width: ' + width);
+    }
+
+    // x, y should be between 0 and the width and height values respectively.
+    if (!inRange(x, 0, width) || !inRange(y, 0, height)) {
+      throw new Error('Invalid x and y coordinates - x: ' + x + ' y: ' + y);
+    }
+
+    x = x / width;
+    y = 1 - y / height;
+    return color.xyPoint(x, y);
+  };
   return color;
 }]);

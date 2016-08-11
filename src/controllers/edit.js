@@ -4,7 +4,6 @@ var scheduleCtrl = angular.module('editCtrl', ['illuminati-conf', 'rzModule']);
 
 scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http', 'config', 'Color', 'Cron', '$window', function($scope, $stateParams, $state, $http, config, Color, Cron, $window) {
   // Prevent images (e.g. color triangle) from being draggable.
-  //
   $window.ondragstart = function() {return false;};
 
   $scope.bri = 255;
@@ -95,27 +94,8 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
     var y = event.clientY - position.top;
     var height = position.height;
     var width = position.width;
-    var isNum = function(i) {
-      return typeof i === 'number' ? true : false;
-    };
-    var inRange = function(i, min, max) {
-      return isNum(i) && i >= min && i <= max ? true : false;
-    };
 
-    // Height, width should be non-zero and positive.
-    if (!isNum(height) || !isNum(width) || height <= 0 || width <= 0) {
-      throw new Error('Invalid height and width values - ' +
-                      'height: ' + height + 'width: ' + width);
-    }
-
-    // x, y should be between 0 and the width and height values respectively.
-    if (!inRange(x, 0, width) || !inRange(y, 0, height)) {
-      throw new Error('Invalid x and y coordinates - x: ' + x + ' y: ' + y);
-    }
-
-    $scope.x = x / width;
-    $scope.y = 1 - y / height;
-    return Color.xyPoint($scope.x, $scope.y);
+    return Color.getXy(height, width, x, y);
   };
   $scope.dayClass = function(enabled) {
     return enabled ? 'dayOn' : 'dayOff';

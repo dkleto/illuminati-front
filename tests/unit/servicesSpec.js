@@ -139,6 +139,68 @@ describe('illuminati services', function() {
     });
   });
 
+  describe('getXy', function(){
+
+    it('should validate height and width', function() {
+      // Height and width should be non-zero.
+      var height = 300;
+      var width = 0;
+      var x = 0;
+      var y = 400;
+
+      expect(function() {
+        Color.getXy(height, width, x, y);
+      }).toThrow(new Error('Invalid height and width values - height: ' +
+                            height + 'width: ' +
+                            width));
+
+      // Height and width should be positive.
+      var height = -200;
+      var width = 0;
+      var x = 0;
+      var y = 400;
+
+      expect(function() {
+        Color.getXy(height, width, x, y);
+      }).toThrow(new Error('Invalid height and width values - height: ' +
+                           height + 'width: ' +
+                           width));
+    });
+
+    it('should validate x and y values', function() {
+      // x, y should be greater than zero.
+      var height = 200;
+      var width = 300;
+      var x = -100;
+      var y = 400;
+
+      expect(function() {
+        Color.getXy(height, width, x, y);
+      }).toThrow(new Error('Invalid x and y coordinates - x: ' + x +
+                           ' y: ' + y));
+
+      // x, y should be less than width and height, respectively.
+      var y = 900;
+      expect(function() {
+        Color.getXy(height, width, x, y);
+      }).toThrow(new Error('Invalid x and y coordinates - x: ' + x +
+                           ' y: ' + y));
+    });
+
+    it('should return an xyPoint object', function() {
+      // Result for valid input should be a valid xyPoint object.
+      var width = 300;
+      var height = 200;
+      var x = 100;
+      var y = 100;
+      var result = {
+        'x' : 1/3,
+        'y' : 1 - 1/2
+      }
+      expect(Color.getXy(height, width, x, y)).toEqual(result);
+    });
+  });
+
  describe('getCronWeekdays', function() {
    it('should generate an object representing a weekday schedule', function() {
      var result = {'mon' : true,
