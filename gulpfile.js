@@ -34,6 +34,10 @@ gulp.task('replace', function () {
         {
           match: 'timeout',
           replacement: conf.timeout
+        },
+        {
+          match: 'env',
+          replacement: conf.env
         }
       ]
     }))
