@@ -10,8 +10,8 @@ var illuminati = angular.module('illuminati', [
     'ui.router'
 ]);
 
-illuminati.config(['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
+illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
+  function($stateProvider, $urlRouterProvider, $httpProvider) {
     $urlRouterProvider.otherwise("/schedules");
     $stateProvider
         .state('schedules', {
@@ -34,5 +34,38 @@ illuminati.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'partials/live.html',
             controller: 'liveCtrl'
         });
+   $httpProvider.interceptors.push(function() {
+       var logExt = function(response, fullResponse) {
+           var url = response.config.url;
+           var status = response.status;
+           var method = response.config.method;
+
+           // Only log for external requests in dev environment.
+           if (config.env !== 'dev' || !/^https?:/.test(url)) {
+               return;
+           }
+
+           if (status === -1) {
+               console.log('No response received for ' + method +
+                           ' request ' + 'to ' + url);
+           } else {
+               console.log(method + ' request to ' + url + ' returned ' +
+                           status);
+           }
+
+           if (fullResponse) {
+               console.log(JSON.stringify(response));
+           }
+       }
+       return {
+           'response': function(response) {
+               logExt(response);
+               return response;
+           },
+           'responseError': function(rejection) {
+               logExt(rejection, true);
+           }
+       };
+   });
   }
 ]);
