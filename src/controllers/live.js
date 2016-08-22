@@ -8,7 +8,6 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
   $scope.submit = function(param, value) {
     var data = {};
     data[param] = value; //TODO: Add error handling for invalid params.
-    console.log(JSON.stringify(data));
 
     var putConfig = {timeout         : config.timeout,
                      params          : data,

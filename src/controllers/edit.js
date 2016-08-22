@@ -51,7 +51,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
             return defVal;
           }
         }
-        console.log(JSON.stringify(data));
         $scope.bri = setVal(data['bri'], $scope.bri, parseInt);
         // Make sure that brightness slider val matches model.
         $scope.briSlider['value'] = $scope.bri;
@@ -76,11 +75,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
                                   $scope.weekDay,
                                   Cron.getCronWeekdays);
         }
-      })
-      .error(function(data, status) {
-        var err = 'Failed fetching schedule "' + $stateParams['scheduleid'] +
-                   '" - HTTP code: ' + status;
-        console.log(err);
       });
 
   } else {
@@ -128,25 +122,17 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       $http.post(config.apiUrl + '/schedule', request, postConfig)
         .success(function(data) {
           var success = 'Schedule created with ID: "' + data['_id']['$oid'];
-          console.log(success);
           // Refresh schedules list by calling syncList on parent controller.
           $scope.syncList();
-        })
+        });
     } else if ($state.is('schedules.edit')) {
       var putConfig = {timeout : config.timeout};
       var url = config.apiUrl + '/schedule/' + $stateParams['scheduleid'];
       $http.put(url, request, putConfig)
         .success(function(data) {
           var success = 'Schedule "' + data['_id']['$oid'] + '" updated.';
-          console.log(success);
           // Refresh schedules list by calling syncList on parent controller.
           $scope.syncList();
-        })
-        .error(function(data, status) {
-          var err = 'Failed updating schedule "' + $stateParams['scheduleid'] +
-                    '". HTTP code: ' + status + ' ' + 'Request data: ' +
-                    JSON.stringify(data);
-          console.log(err);
         });
     }
     // Close edit modal and return to schedules list.
