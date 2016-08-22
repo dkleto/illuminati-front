@@ -132,11 +132,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
           // Refresh schedules list by calling syncList on parent controller.
           $scope.syncList();
         })
-        .error(function(data, status) {
-          var err = 'Failed creating schedule. HTTP code: ' + status + ' ' +
-                    'Request data: ' + JSON.stringify(data);
-          console.log(err);
-        });
     } else if ($state.is('schedules.edit')) {
       var putConfig = {timeout : config.timeout};
       var url = config.apiUrl + '/schedule/' + $stateParams['scheduleid'];

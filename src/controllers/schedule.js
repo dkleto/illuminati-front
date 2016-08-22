@@ -13,8 +13,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
           schedule.timeStamp = Date.parse(schedule.creationtime);
           schedule.weekdays = Cron.getCronWeekdays(schedule.cron);
         }
-      })
-      .error(function(data, status) {
       });
   };
   $scope.cron = Cron;
@@ -52,13 +50,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     var delConfig = {timeout : config.timeout};
     $http.delete(config.apiUrl + '/schedule/' + id, delConfig)
       .success(function(data) {
-        console.log('Schedule "' + id + '" deleted.');
         $scope.syncList();
       })
-      .error(function(data, status) {
-        var err = 'Failed deleting schedule "' + id + '". HTTP code: '
-                  + status;
-        console.log(err);
-      });
   };
 }]);

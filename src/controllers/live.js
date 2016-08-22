@@ -14,13 +14,7 @@ scheduleCtrl.controller('liveCtrl', ['$scope', '$http', 'config', 'Color', '$win
                      params          : data,
                      paramSerializer : '$httpParamSerializerJQLike'};
 
-    $http.put(config.apiUrl + '/lights/all', '', putConfig)
-      .success(function(data) {
-        console.log('success: ' + JSON.stringify(data));
-      })
-      .error(function(data, status) {
-        console.log('error: ' + data + ' ' + status);
-      });
+    $http.put(config.apiUrl + '/lights/all', '', putConfig);
   };
   $scope.bri = 255;
   $scope.briSlider = {
