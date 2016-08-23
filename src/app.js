@@ -59,7 +59,7 @@ illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
        }
        return {
            'response': function(response) {
-               logExt(response);
+               logExt(response, false);
                return response;
            },
            'responseError': function(rejection) {
