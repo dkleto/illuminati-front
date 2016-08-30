@@ -12,7 +12,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   $scope.hour = 12;
   $scope.minute = 0;
   $scope.on = true;
-  $scope.xy = Color.xyPoint(0.5, 1);
+  $scope.xy = Color.xyPoint(0.3548,0.3489);
   $scope.transTime= 0;
   $scope.weekDay = {'mon' : true,
                  'tue' : true,
