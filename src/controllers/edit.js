@@ -137,4 +137,15 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
     // Close edit modal and return to schedules list.
     $state.go('^');
   };
+  $scope.delSchedule = function() {
+    if ($state.is('schedules.edit')) {
+      var delConfig = {timeout : config.timeout};
+      var id = $stateParams['scheduleid'];
+      $http.delete(config.apiUrl + '/schedule/' + id, delConfig)
+        .success(function(data) {
+          $scope.syncList();
+        });
+    }
+    $state.go('^');
+  };
 }]);

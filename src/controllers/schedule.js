@@ -46,11 +46,4 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     }
     return {'background-color' : color};
   };
-  $scope.delSchedule = function(id) {
-    var delConfig = {timeout : config.timeout};
-    $http.delete(config.apiUrl + '/schedule/' + id, delConfig)
-      .success(function(data) {
-        $scope.syncList();
-      })
-  };
 }]);

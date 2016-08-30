@@ -39,13 +39,14 @@ describe('illuminati app', function() {
         expect(transTime.getText()).toEqual('Transition time: 0');
 
         // Run through the steps to delete the new schedule.
-        var deleteSchedule = lastSchedule.element(by.css('.delSchedule'));
+        var deleteSchedule = element.all(by.css('.delSchedule'));
         protractor.promise.all([
+          lastSchedule.element(by.css('.editButton')).click(),
           deleteSchedule.click(),
           scheduleList.count()
         ]).then(function(delSteps) {
           // The final count of schedules should match the original count.
-          expect(delSteps[1]).toEqual(steps[0]);
+          expect(delSteps[2]).toEqual(steps[0]);
         });
       });
     });
