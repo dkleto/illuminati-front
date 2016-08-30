@@ -10,8 +10,7 @@
   <input type="number" min="0" max="23" ng-model="hour"/>
   <input type="number" min="0" max="59" ng-model="minute"/>
   <input type="number" min="0" max="600" ng-model="transTime"/>
-  <input type="checkbox" ng-model="repeated">Repeat</input>
-  <div ng-if="repeated">
+  <div>
     <span ng-repeat="(key, value) in weekDay">
       <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(key)">
         {{key}}

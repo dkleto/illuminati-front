@@ -11,7 +11,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   $scope.label = '';
   $scope.hour = 12;
   $scope.minute = 0;
-  $scope.repeat = false;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.5, 1);
   $scope.transTime= 0;
@@ -71,7 +70,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
           $scope.hour = setVal(data['cron']['hour'],
                                  $scope.hour,
                                  parseInt);
-          $scope.weekDay = setVal(data['cron']['weekday'],
+          $scope.weekDay = setVal(data['cron'],
                                   $scope.weekDay,
                                   Cron.getCronWeekdays);
         }
