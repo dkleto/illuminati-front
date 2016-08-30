@@ -46,7 +46,8 @@ h1 {
 .schedule {
   float: left;
   width: 18em;
-  margin: 0.8em;
+  padding: 0.8em;
+  cursor: pointer;
 }
 .schedule ul {
   list-style-type: none;

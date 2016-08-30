@@ -41,7 +41,7 @@ describe('illuminati app', function() {
         // Run through the steps to delete the new schedule.
         var deleteSchedule = element.all(by.css('.delSchedule'));
         protractor.promise.all([
-          lastSchedule.element(by.css('.editButton')).click(),
+          lastSchedule.element(by.css('ul')).click(),
           deleteSchedule.click(),
           scheduleList.count()
         ]).then(function(delSteps) {

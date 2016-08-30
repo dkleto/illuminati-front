@@ -6,8 +6,8 @@
 </div>
 <div class="scheduleBoard">
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
-    <div class="schedule" ng-style="getSchedColor(schedule)">
-      <ul>
+    <div ui-sref="schedules.edit({scheduleid: schedule['_id']['$oid']})" class="schedule">
+      <ul ng-style="getSchedColor(schedule)">
         <li class="scheduleLabel">
           {{schedule.label}}<br>
         </li>
@@ -30,7 +30,6 @@
           Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
         </li>
       </ul>
-      <a class="editButton" ui-sref="schedules.edit({scheduleid: schedule['_id']['$oid']})">Edit</a>
     </div>
   </div>
   <div>
