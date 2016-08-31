@@ -35,7 +35,7 @@ describe('illuminati app', function() {
 
         // Check that label, cron time and trans time were set correctly.
         expect(label.getText()).toEqual(testLabel);
-        expect(time.getText()).toEqual('Time: 12:00');
+        expect(time.getText()).toEqual('12:00');
         expect(transTime.getText()).toEqual('Transition time: 0');
 
         // Run through the steps to delete the new schedule.

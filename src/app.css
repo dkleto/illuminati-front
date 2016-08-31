@@ -67,3 +67,6 @@ div.liveContent {
 .scheduleEdit .dayOff {
   background-color: #DDDDDD;
 }
+.scheduleCronTime {
+  font-size: 1.7em;
+}
