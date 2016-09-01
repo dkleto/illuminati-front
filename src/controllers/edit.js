@@ -26,7 +26,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
     options : {
       floor : 0,
       ceil : 255,
-      vertical : true,
       onEnd : function(sliderId, modelValue, highValue) {
         $scope.bri = modelValue;
       },
