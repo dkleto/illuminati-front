@@ -13,7 +13,7 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   $scope.minute = 0;
   $scope.on = true;
   $scope.xy = Color.xyPoint(0.3548,0.3489);
-  $scope.transTime= 0;
+  $scope.transTime= 20;
   $scope.weekDay = {'mon' : true,
                  'tue' : true,
                  'wed' : true,
@@ -75,7 +75,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
         }
       });
 
-  } else {
   }
   $scope.setXy = function(point) {
     $scope.xy = point;
