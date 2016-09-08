@@ -1,6 +1,6 @@
 <div ui-sref="schedules" class="overlay"></div>
 <div class="scheduleEdit">
-   <rzslider rz-slider-model="briSlider.value" rz-slider-options="briSlider.options"></rzslider>
+   <input type="range" ng-model="bri" min="minBri" max="maxBri"></rzslider>
    <input type="checkbox" ng-model="on">On/off</input>
   <map name="xyMap">
     <area shape="poly" coords="0,200,100,0,200,200" ng-click="setXy(getXy($event))">

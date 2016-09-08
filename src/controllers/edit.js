@@ -6,6 +6,8 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
   // Prevent images (e.g. color triangle) from being draggable.
   $window.ondragstart = function() {return false;};
 
+  $scope.minBri = 0;
+  $scope.maxBri = 255;
   $scope.bri = 255;
   $scope.alert = 'none';
   $scope.label = '';
@@ -21,18 +23,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
                  'fri' : true,
                  'sat' : true,
                  'sun' : true};
-  $scope.briSlider = {
-    value : $scope.bri,
-    options : {
-      floor : 0,
-      ceil : 255,
-      onEnd : function(sliderId, modelValue, highValue) {
-        $scope.bri = modelValue;
-      },
-      hidePointerLabels : true,
-      hideLimitLabels : true
-    }
-  };
 
   if ($state.is('schedules.edit')) {
     var getConfig = {timeout: config.timeout};

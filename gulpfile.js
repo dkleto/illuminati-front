@@ -88,10 +88,9 @@ gulp.task('watch', function() {
 // Unfortunately dependencies are hard-coded for now...
 var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js' : 'angular.min.js',
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js' : 'angular-route.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.11.0/rzslider.min.js' : 'rzslider.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js' : 'angular-ui-router.min.js',
-            'https://fonts.googleapis.com/css?family=Roboto:400' : 'roboto.css',
-            'https://cdnjs.cloudflare.com/ajax/libs/angularjs-slider/2.11.0/rzslider.min.css' : 'rzslider.min.css'};
+            'https://fonts.googleapis.com/css?family=Roboto:400' : 'roboto.css'
+           };
 
 gulp.task('offline', ['offline-replace'], function () {
     download(Object.keys(deps))
