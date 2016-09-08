@@ -6,7 +6,6 @@ var illuminati = angular.module('illuminati', [
     'editCtrl',
     'illuminatiColorService',
     'illuminatiCronService',
-    'rzModule',
     'ui.router'
 ]);
 

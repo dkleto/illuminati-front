@@ -1,6 +1,6 @@
 'use strict';
 
-var scheduleCtrl = angular.module('editCtrl', ['illuminati-conf', 'rzModule']);
+var scheduleCtrl = angular.module('editCtrl', ['illuminati-conf']);
 
 scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http', 'config', 'Color', 'Cron', '$window', function($scope, $stateParams, $state, $http, config, Color, Cron, $window) {
   // Prevent images (e.g. color triangle) from being draggable.
@@ -40,8 +40,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
           }
         }
         $scope.bri = setVal(data['bri'], $scope.bri, parseInt);
-        // Make sure that brightness slider val matches model.
-        $scope.briSlider['value'] = $scope.bri;
         $scope.label = setVal(data['label'], $scope.label);
         $scope.on = setVal(data['on'], $scope.on);
         $scope.xy = setVal(data['xy'], $scope.xy);
