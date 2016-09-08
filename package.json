@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "angular": "^1.4.7",
-    "angularjs-slider": "^2.11.0",
     "angular-ui-router": "^0.3.0"
   }
 }
