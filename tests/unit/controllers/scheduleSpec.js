@@ -26,5 +26,38 @@ describe('schedule controller', function() {
     });
   });
 
+  describe('setVal', function() {
+    it('should return default value for null property', function() {
+      var def = 'default';
+      expect(scope.setVal(null, def, function() {return 'wrong';}))
+        .toEqual(def);
+    });
+
+    it('should return default value for undefined property', function() {
+      var def = 'default';
+      var noProp = {};
+      var testFunc = function(param) {return 'wrong' + param;};
+      expect(scope.setVal(noProp.property, def, testFunc)).toEqual(def);
+    });
+
+    it('should return property if invalid function is supplied', function() {
+      var def = 'wrong';
+      var prop = 'property';
+      var noFunc = {};
+      expect(scope.setVal(prop, def, 'notAfunc')).toEqual(prop);
+      expect(scope.setVal(prop, def, noFunc.testFunc)).toEqual(prop);
+    });
+
+    it('should apply valid function with valid property param', function() {
+      var def = 'wrong';
+      var prop = 'property';
+      var expectedResult = 'correct' + prop;
+      var testFunc = function(param) {
+        return 'correct' + param;
+      };
+      expect(scope.setVal(prop, def, testFunc)).toEqual(expectedResult);
+    });
+  });
+
 });
 
