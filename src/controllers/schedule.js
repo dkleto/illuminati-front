@@ -2,21 +2,132 @@
 
 var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', function($scope, $http, config, Color, Cron) {
+scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', '$state', '$stateParams', '$location', function($scope, $http, config, Color, Cron, $state, $stateParams, $location) {
 
+  $scope.editTemplate = 'partials/schedule-edit.html';
+
+  // Set up function to handle type checking and default values.
+  $scope.setVal = function(property, defVal, callback) {
+    if (typeof property !== 'undefined' && property !== null) {
+      if (typeof callback === 'function') {
+        return callback(property);
+      }
+      return property;
+    } else {
+      return defVal;
+    }
+  };
+  $scope.maxBri = 255;
+  $scope.minBri = 0;
+  $scope.colors = {}
   $scope.syncList = function() {
+    // Pull down all schedules and build an array of schedule objects.
     $http.get(config.apiUrl + '/schedules')
       .success(function(data) {
         $scope.schedules = data;
         for (var i=0; i < $scope.schedules.length; i++) {
           var schedule = $scope.schedules[i];
+          schedule.id = schedule['_id']['$oid'];
+          // Set timestamp for schedule sorting.
           schedule.timeStamp = Date.parse(schedule.creationtime);
-          schedule.weekdays = Cron.getCronWeekdays(schedule.cron);
+          $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+
+          var weekDay = {'mon' : true,
+                         'tue' : true,
+                         'wed' : true,
+                         'thu' : true,
+                         'fri' : true,
+                         'sat' : true,
+                         'sun' : true};
+
+          if (Cron.isCronAdvanced(schedule['cron'])) {
+            //TODO: Handle advanced cron specs properly.
+            console.log('Advanced cron specs not yet supported.');
+          } else {
+            // Set up models for cron field manipulation.
+            schedule.weekday = $scope.setVal(schedule['cron'],
+                                    weekDay,
+                                    Cron.getCronWeekdays);
+            schedule.minute = $scope.setVal(schedule['cron']['minute'],
+                                     0,
+                                     parseInt);
+            schedule.hour = $scope.setVal(schedule['cron']['hour'],
+                                   12,
+                                   parseInt);
+          }
         }
       });
   };
-  $scope.cron = Cron;
+  $scope.toggleEdit = function(schedId) {
+    // Check and validate on existing schedules?
+    if (typeof schedId === 'string' && schedId.match(/[0-9a-fA-F]{24}/)) {
+      var fullPath = '/schedules/edit/' + schedId;
+      if (fullPath === $location.path()) {
+        // Hide editing mode if schedule is already open for editing.
+        $location.path('/schedules');
+      } else {
+        // Open schedule for editing if it is not already open.
+        $location.path(fullPath);
+      }
+    }
+  };
+  $scope.isEditEnabled = function(scheduleId) {
+    if ($state.is('schedules.edit')) {
+      return scheduleId === $location.path().replace(/.*\//, '');
+    }
+    return false;
+  };
+  $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
+    var request = {};
+    var putConfig = {timeout : config.timeout};
+    var url = config.apiUrl + '/schedule/' + scheduleId;
+    request[fieldName] = fieldValue;
+    $http.put(url, request, putConfig);
+  }
+  $scope.updateColor = function(schedule, eventObj) {
+    schedule['xy'] = $scope.getXy(eventObj);
+    // First update the colour for local display.
+    $scope.$parent.colors[schedule.id] = $scope.getSchedColor(schedule);
+    $scope.updateSchedule(schedule.id, 'xy', schedule.xy);
+  };
+  $scope.updateCron = function(schedule, cronField, cronValue) {
+    schedule.cron[cronField] = cronValue;
+    $scope.updateSchedule(schedule.id, 'cron', schedule.cron);
+  };
+  $scope.delSchedule = function(schedule) {
+    if ($state.is('schedules.edit')) {
+      var delConfig = {timeout : config.timeout};
+      $http.delete(config.apiUrl + '/schedule/' + schedule.id, delConfig)
+        .success(function(data) {
+          $scope.syncList();
+        });
+    }
+    $state.go('^');
+  };
   $scope.syncList();
+  $scope.cron = Cron;
+  $scope.dayClass = function(enabled) {
+    return enabled ? 'dayOn' : 'dayOff';
+  };
+  $scope.toggleDay = function(schedule, day) {
+    if (typeof schedule.weekday[day] === 'boolean') {
+      var weekdayLength = Cron.weekdayArrFromObj(schedule.weekday).length;
+      // Prevent the user from turning off all week days.
+      if (!(weekdayLength < 2 && schedule.weekday[day])) {
+        schedule.weekday[day] = !schedule.weekday[day];
+        $scope.updateCron(schedule, 'weekday', Cron.getCronFromWeekdays(schedule.weekday, Cron.weekdayArrFromObj));
+      }
+     }
+  };
+  $scope.getXy = function(event) {
+    var position = event.target.getBoundingClientRect();
+    var x = event.clientX - position.left;
+    var y = event.clientY - position.top;
+    var height = position.height;
+    var width = position.width;
+
+    return Color.getXy(height, width, x, y);
+  };
   $scope.gamut = {
     'r' : {'x' : 0.675, 'y' : 0.322},
     'g' : {'x' : 0.409, 'y' : 0.518},

@@ -6,30 +6,33 @@
 </div>
 <div class="scheduleBoard">
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
-    <div ui-sref="schedules.edit({scheduleid: schedule['_id']['$oid']})" class="schedule">
-      <ul ng-style="getSchedColor(schedule)">
-        <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
-          {{cron.getTime(schedule.cron)}}
-        </li>
-        <li ng-if="schedule.time">
-          Time: {{schedule.time}}
-        </li>
-        <li class="scheduleLabel">
-          {{schedule.label}}<br>
-        </li>
-        <li>
-          Light state: {{schedule.on}}
-        </li>
-        <li class="scheduleTransTime">
-          Transition time: {{schedule.transitiontime}}
-        </li>
-        <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
-          <span ng-repeat="(key, value) in schedule.weekdays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
-        </li>
-        <li ng-if="Cron.isCronAdvanced(schedule.cron)">
-          Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
-        </li>
-      </ul>
+    <div ng-click="toggleEdit(schedule['_id']['$oid'])" class="schedule">
+      <div class="scheduleBox" ng-style="$parent.colors[schedule.id]">
+        <ul>
+          <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
+            {{cron.getTime(schedule.cron)}}
+          </li>
+          <li ng-if="schedule.time">
+            Time: {{schedule.time}}
+          </li>
+          <li class="scheduleLabel">
+            {{schedule.label}}<br>
+          </li>
+          <li>
+            Light state: {{schedule.on}}
+          </li>
+          <li class="scheduleTransTime">
+            Transition time: {{schedule.transitiontime}}
+          </li>
+          <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
+            <span ng-repeat="(key, value) in schedule.weekDays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
+          </li>
+          <li ng-if="Cron.isCronAdvanced(schedule.cron)">
+            Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
+          </li>
+        </ul>
+      <div ng-if="isEditEnabled(schedule.id)" ng-include="editTemplate"></div>
+      </div>
     </div>
   </div>
   <div>

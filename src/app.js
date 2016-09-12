@@ -3,7 +3,6 @@
 var illuminati = angular.module('illuminati', [
     'scheduleCtrl',
     'liveCtrl',
-    'editCtrl',
     'illuminatiColorService',
     'illuminatiCronService',
     'ui.router'
@@ -24,9 +23,9 @@ illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
                 controller: 'editCtrl'
             })
             .state('schedules.edit', {
-                url: '/edit/{scheduleid:[0-9a-fA-Z]{24}}',
-                templateUrl: 'partials/schedule-edit.html',
-                controller: 'editCtrl'
+                url: '/edit/{scheduleid:[0-9a-fA-F]{24}}',
+                templateUrl: 'partials/schedule-list.html',
+                controller: 'scheduleCtrl'
             })
         .state('live', {
             url: '/live',

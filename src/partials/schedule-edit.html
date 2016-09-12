@@ -1,22 +1,20 @@
-<div ui-sref="schedules" class="overlay"></div>
-<div class="scheduleEdit">
-   <input type="range" ng-model="bri" min="minBri" max="maxBri">Brightness</input>
-   <input type="checkbox" ng-model="on">On/off</input>
+<div ng-click="$event.stopPropagation()" class="scheduleEdit">
+   <input type="range" min="minBri" max="maxBri" ng-model="schedule.bri" ng-change="updateSchedule(schedule.id, 'bri', schedule.bri)">Brightness</input>
+   <input type="checkbox" ng-model="schedule.on" ng-change="updateSchedule(schedule.id, 'on', schedule.on)">On/off</input>
   <map name="xyMap">
-    <area shape="poly" coords="0,200,100,0,200,200" ng-click="setXy(getXy($event))">
+    <area shape="poly" coords="0,200,100,0,200,200" ng-click="updateColor(schedule, $event)"/>
   </map>
   <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
-  <input type="text" ng-model="label"> Label</input>
-  <input type="number" min="0" max="23" ng-model="hour"> Hour</input>
-  <input type="number" min="0" max="59" ng-model="minute"/> Minute</input>
-  <input type="number" min="0" max="600" ng-model="transTime"/> Transition time</input>
+  <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, 'label', schedule.label)"> Label</input>
+  <input type="number" min="0" max="23" ng-model="schedule.hour" ng-change="updateCron(schedule, 'hour', schedule.hour)"> Hour</input>
+  <input type="number" min="0" max="59" ng-model="schedule.minute" ng-change="updateCron(schedule, 'minute', schedule.minute)"> Minute</input>
+  <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, 'transitiontime', schedule.transitiontime)"/> Transition time</input>
   <div>
-    <span ng-repeat="(key, value) in weekDay">
-      <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(key)">
+    <span ng-repeat="(key, value) in schedule.weekday">
+      <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
         {{key}}
       </span>
     </span>
   </div>
-  <button class="saveSchedule" ng-click="saveSchedule()">Save</button>
-  <button class="delSchedule" ng-click="delSchedule()">Delete</button>
+  <button class="delSchedule" ng-click="delSchedule(schedule)">Delete</button>
 </div>
