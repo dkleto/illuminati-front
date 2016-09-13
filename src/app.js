@@ -5,7 +5,9 @@ var illuminati = angular.module('illuminati', [
     'liveCtrl',
     'illuminatiColorService',
     'illuminatiCronService',
-    'ui.router'
+    'ui.router',
+    'ngMaterial',
+    'ngMessages'
 ]);
 
 illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',

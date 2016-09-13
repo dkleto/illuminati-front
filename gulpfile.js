@@ -86,14 +86,15 @@ gulp.task('watch', function() {
 // Save external dependencies for local development work.
 
 // Unfortunately dependencies are hard-coded for now...
-var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js' : 'angular.min.js',
+var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js' : 'angular.min.js',
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js' : 'angular-route.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js' : 'angular-ui-router.min.js',
             'https://fonts.googleapis.com/css?family=Roboto:400' : 'roboto.css',
-            'https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css' : 'angular-material.min.css',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js' : 'angular-animate.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js' : 'angular-aria.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js' : 'angular-material.min.js'
+            'https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css' : 'angular-material.min.css',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js' : 'angular-animate.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js' : 'angular-aria.min.js',
+            'http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-messages.min.js' : 'angular-messages.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js' : 'angular-material.min.js'
            };
 
 gulp.task('offline', ['offline-replace'], function () {
