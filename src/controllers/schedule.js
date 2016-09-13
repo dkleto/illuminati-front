@@ -76,13 +76,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     }
     return false;
   };
-  $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
-    var request = {};
-    var putConfig = {timeout : config.timeout};
-    var url = config.apiUrl + '/schedule/' + scheduleId;
-    request[fieldName] = fieldValue;
-    $http.put(url, request, putConfig);
-  }
   $scope.updateColor = function(schedule, eventObj) {
     schedule['xy'] = $scope.getXy(eventObj);
     // First update the colour for local display.
@@ -93,6 +86,13 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     schedule.cron[cronField] = cronValue;
     $scope.updateSchedule(schedule.id, 'cron', schedule.cron);
   };
+  $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
+    var request = {};
+    var putConfig = {timeout : config.timeout};
+    var url = config.apiUrl + '/schedule/' + scheduleId;
+    request[fieldName] = fieldValue;
+    $http.put(url, request, putConfig);
+  }
   $scope.delSchedule = function(schedule) {
     if ($state.is('schedules.edit')) {
       var delConfig = {timeout : config.timeout};
