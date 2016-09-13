@@ -40,12 +40,12 @@ describe('schedule controller', function() {
       expect(scope.setVal(noProp.property, def, testFunc)).toEqual(def);
     });
 
-    it('should return property if invalid function is supplied', function() {
-      var def = 'wrong';
+    it('should return default if invalid function is supplied', function() {
+      var def = 'default';
       var prop = 'property';
       var noFunc = {};
-      expect(scope.setVal(prop, def, 'notAfunc')).toEqual(prop);
-      expect(scope.setVal(prop, def, noFunc.testFunc)).toEqual(prop);
+      expect(scope.setVal(prop, def, 'notAfunc')).toEqual(def);
+      expect(scope.setVal(prop, def, noFunc.testFunc)).toEqual(def);
     });
 
     it('should apply valid function with valid property param', function() {

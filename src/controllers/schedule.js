@@ -8,14 +8,13 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
 
   // Set up function to handle type checking and default values.
   $scope.setVal = function(property, defVal, callback) {
-    if (typeof property !== 'undefined' && property !== null) {
-      if (typeof callback === 'function') {
-        return callback(property);
-      }
-      return property;
-    } else {
-      return defVal;
+    var validProp = typeof property !== 'undefined' && property !== null;
+    var validFunc = typeof callback === 'function';
+
+    if (validProp && validFunc) {
+      return callback(property);
     }
+    return defVal;
   };
   $scope.maxBri = 255;
   $scope.minBri = 0;
