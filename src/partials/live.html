@@ -4,7 +4,7 @@
   </h1>
 </div>
 <div class="liveContent">
-   <input type="range" ng-model="bri" min="minBri" max="maxBri">Brightness</input>
+   <input type="range" ng-model="bri" min="minBri" max="maxBri" ng-change="submit('bri', bri)">Brightness</input>
    <input type="checkbox" ng-model="on" ng-change="submit('on', on)">On/off</input>
   <map name="xyMap">
     <area shape="poly" coords="0,200,100,0,200,200" href="#/live" ng-click="submit('xy', getXy($event))">
