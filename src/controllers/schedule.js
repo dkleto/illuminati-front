@@ -86,6 +86,29 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     schedule.cron[cronField] = cronValue;
     $scope.updateSchedule(schedule.id, 'cron', schedule.cron);
   };
+  /**
+   * Create a new default schedule via the API, refresh the schedule list
+   * and open editing mode for that schedule.
+   */
+  $scope.createSchedule = function() {
+    var request = {'xy' : Color.xyPoint(0.3548,0.3489),
+                   'cron' : {'minute' : '0',
+                             'hour'   : '15',
+                             'day'    : '*',
+                             'month'  : '*',
+                             'weekday': '*'},
+                   'transitiontime' : 50};
+    var postConfig = {timeout : config.timeout};
+    var url = config.apiUrl + '/schedule';
+    $http.post(url, request, postConfig)
+      .success(function(data) {
+        if (typeof data['_id']['$oid'] === 'string') {
+          var scheduleId = data['_id']['$oid'];
+          $scope.syncList();
+          $scope.toggleEdit(scheduleId);
+        }
+      });
+  };
   $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
     var request = {};
     var putConfig = {timeout : config.timeout};
