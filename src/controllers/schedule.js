@@ -109,13 +109,26 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
         }
       });
   };
+  /**
+   * Update a given schedule via the API.
+   *
+   * @param string scheduleId  Valid schedule ID.
+   * @param string fieldName   Valid schedule field to update.
+   * @param mixed  fieldValue  Value to update the selected field with.
+   */
   $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
     var request = {};
     var putConfig = {timeout : config.timeout};
     var url = config.apiUrl + '/schedule/' + scheduleId;
     request[fieldName] = fieldValue;
     $http.put(url, request, putConfig);
-  }
+  };
+  /**
+   * Delete a given schedule via the API.
+   * and open editing mode for that schedule.
+   *
+   * @param object schedule  Valid schedule object.
+   */
   $scope.delSchedule = function(schedule) {
     if ($state.is('schedules.edit')) {
       var delConfig = {timeout : config.timeout};
