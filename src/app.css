@@ -20,6 +20,7 @@ h1 {
 }
 .scheduleEdit {
   padding: 0.5em;
+  outline: 0;
 }
 .titleBar {
   height: 3.5em;
@@ -41,6 +42,7 @@ h1 {
   width: 18em;
   padding: 0.8em;
   cursor: pointer;
+  outline: 0;
 }
 .scheduleBox ul {
   list-style-type: none;
