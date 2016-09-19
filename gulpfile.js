@@ -86,8 +86,7 @@ gulp.task('watch', function() {
 // Save external dependencies for local development work.
 
 // Unfortunately dependencies are hard-coded for now...
-var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js' : 'angular.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js' : 'angular-route.min.js',
+var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js' : 'angular.min.js',
             'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js' : 'angular-ui-router.min.js',
             'https://fonts.googleapis.com/css?family=Roboto:400' : 'roboto.css'
            };
