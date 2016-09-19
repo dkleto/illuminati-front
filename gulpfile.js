@@ -6,17 +6,14 @@ var del = require('del');
 var replaceTask = require('gulp-replace-task');
 var args = require('yargs').argv;
 var fs = require('fs');
-var download = require('gulp-download');
-var rename = require('gulp-rename');
-var batchReplace = require('gulp-batch-replace');
+var sym = require('gulp-sym');
 
 var paths = {
     files: ['src/**/*.css', 'src/**/*.html', 'src/**/*.png'],
     js: ['src/*.js', 'src/controllers/*.js', 'src/services/*.js', 'src/config/conf.js'],
-    filesdist: ['dist/**/*', '!dist/**/*.js'],
-    jsdist: ['dist/**/*.js', 'dist/config']
+    filesdist: ['dist/**/*', '!dist/**/*.js', '!dist/node_modules/**'],
+    jsdist: ['dist/**/*.js', 'dist/config', '!dist/node_modules/**'],
 }
-
 
 /* Pull in env variables from a json file and generate a conf.js file */
 gulp.task('replace', function () {
@@ -76,45 +73,17 @@ gulp.task('files', ['clean:files'], function () {
         .pipe(gulp.dest('dist'));
 })
 
-gulp.task('build', ['files', 'js']);
-
-gulp.task('watch', function() {
-    gulp.watch(paths.files, ['files']);
-    gulp.watch(paths.js, ['js']);
-});
-
-// Save external dependencies for local development work.
-
-// Unfortunately dependencies are hard-coded for now...
-var deps = {'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js' : 'angular.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.min.js' : 'angular-ui-router.min.js',
-            'https://fonts.googleapis.com/css?family=Roboto:400' : 'roboto.css'
-           };
-
-gulp.task('offline', ['offline-replace'], function () {
-    download(Object.keys(deps))
-        .pipe(rename(function (path) {
-            // Get the output file name.
-            for (var url in deps) {
-                if(url.replace(/.*\//, '') === path.basename) {
-                    // Split the output filename and use it to set the path.
-                    path.extname = deps[url].replace(/.*\./, '.');
-                    var base = deps[url].match(/.*\./)[0];
-                    path.basename = base.substr(0, base.length - 1);
-                }
-            };
-        }))
-        .pipe(gulp.dest('dist/.offline'));
-});
-
-gulp.task('offline-replace', function () {
-    // Generate an array to pass to batchReplace.
-    var replaceArr = [];
-    for (var url in deps) {
-        replaceArr.push([url, '.offline/' + deps[url]]);
+/* Symlink node_modules to make dependencies available for dev work */
+gulp.task('deps', [], function() {
+    if (!fs.existsSync('dist/node_modules')) {
+    gulp.src('node_modules')
+      .pipe(sym('dist/node_modules'))
     }
+});
 
-    gulp.src('src/index.html')
-        .pipe(batchReplace(replaceArr))
-        .pipe(gulp.dest('dist'));
+gulp.task('build', ['files', 'js', 'deps']);
+
+gulp.task('watch', [], function() {
+    gulp.watch(paths.files, ['build']);
+    gulp.watch(paths.js, ['build']);
 });

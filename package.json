@@ -52,6 +52,8 @@
     "angular-aria": "^1.5.8",
     "angular-material": "^1.1.1",
     "angular-messages": "^1.5.8",
-    "angular-ui-router": "^0.3.0"
+    "angular-ui-router": "^0.3.0",
+    "gulp-sym": "0.0.14",
+    "roboto-font": "^0.1.0"
   }
 }
