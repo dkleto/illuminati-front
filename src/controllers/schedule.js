@@ -79,7 +79,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
   $scope.updateColor = function(schedule, eventObj) {
     schedule['xy'] = $scope.getXy(eventObj);
     // First update the colour for local display.
-    $scope.$parent.colors[schedule.id] = $scope.getSchedColor(schedule);
+    $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
     $scope.updateSchedule(schedule.id, 'xy', schedule.xy);
   };
   $scope.updateCron = function(schedule, cronField, cronValue) {
