@@ -5,7 +5,10 @@
     <area shape="poly" coords="0,200,100,0,200,200" ng-click="updateColor(schedule, $event)"/>
   </map>
   <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
-  <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, 'label', schedule.label)"> Label</input>
+  <md-input-container>
+    <label>Label</label>
+    <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, 'label', schedule.label)">
+  </md-input-container>
   <input type="number" min="0" max="23" ng-model="schedule.hour" ng-change="updateCron(schedule, 'hour', schedule.hour)"> Hour</input>
   <input type="number" min="0" max="59" ng-model="schedule.minute" ng-change="updateCron(schedule, 'minute', schedule.minute)"> Minute</input>
   <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, 'transitiontime', schedule.transitiontime)"/> Transition time</input>
