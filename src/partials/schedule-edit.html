@@ -1,4 +1,3 @@
-<div ng-click="$event.stopPropagation()" class="scheduleEdit">
    <md-slider min="{{minBri}}" max="{{maxBri}}" ng-model="schedule.bri" ng-change="updateSchedule(schedule.id, 'bri', schedule.bri)" aria-label="brightness">Brightness</md-slider>
    <input type="checkbox" ng-model="schedule.on" ng-change="updateSchedule(schedule.id, 'on', schedule.on)">On/off</input>
   <map name="xyMap">

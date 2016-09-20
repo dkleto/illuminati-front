@@ -30,7 +30,7 @@
             Adv: {{schedule.cron.minute}} {{schedule.cron.hour}} {{schedule.cron.day}} {{schedule.cron.month}} {{schedule.cron.weekday}}
           </li>
         </ul>
-      <div ng-if="isEditEnabled(schedule.id)" ng-include="editTemplate"></div>
+      <div  class="scheduleEdit" ng-if="isEditEnabled(schedule.id)" ng-click="$event.stopPropagation()" ng-include="editTemplate"></div>
       </div>
     </div>
   </div>
