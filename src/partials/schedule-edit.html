@@ -10,7 +10,10 @@
   </md-input-container>
   <input type="number" min="0" max="23" ng-model="schedule.hour" ng-change="updateCron(schedule, 'hour', schedule.hour)"> Hour</input>
   <input type="number" min="0" max="59" ng-model="schedule.minute" ng-change="updateCron(schedule, 'minute', schedule.minute)"> Minute</input>
-  <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, 'transitiontime', schedule.transitiontime)"/> Transition time</input>
+  <md-input-container>
+    <label>Transition time</label>
+    <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, 'transitiontime', schedule.transitiontime)">
+  </md-input-container>
   <div>
     <span ng-repeat="(key, value) in schedule.weekday">
       <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
