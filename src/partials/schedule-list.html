@@ -5,7 +5,7 @@
 </div>
 <div class="scheduleBoard">
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
-    <div ng-click="toggleEdit(schedule['_id']['$oid'])" class="schedule">
+    <md-card ng-click="toggleEdit(schedule['_id']['$oid'])" class="schedule">
       <div class="scheduleBox" ng-style="$parent.colors[schedule.id]">
         <ul>
           <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
@@ -32,7 +32,7 @@
         </ul>
       <div  class="scheduleEdit" ng-if="isEditEnabled(schedule.id)" ng-click="$event.stopPropagation()" ng-include="editTemplate"></div>
       </div>
-    </div>
+    </md-card>
   </div>
   <div>
     <a class="addSchedule" ng-click="createSchedule()">Create new schedule</a>
