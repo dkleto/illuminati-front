@@ -1,9 +1,9 @@
-   <md-slider min="{{minBri}}" max="{{maxBri}}" ng-model="schedule.bri" ng-change="updateSchedule(schedule.id, 'bri', schedule.bri)" aria-label="brightness">Brightness</md-slider>
    <md-switch ng-model="schedule.on" ng-change="updateSchedule(schedule.id, 'on', schedule.on)" aria-label="light on/off">Light on/off</md-switch>
   <map name="xyMap">
     <area shape="poly" coords="0,200,100,0,200,200" ng-click="updateColor(schedule, $event)"/>
   </map>
   <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
+   <md-slider min="{{minBri}}" max="{{maxBri}}" ng-model="schedule.bri" ng-change="updateSchedule(schedule.id, 'bri', schedule.bri)" aria-label="brightness">Brightness</md-slider>
   <md-input-container>
     <label>Label</label>
     <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, 'label', schedule.label)">
