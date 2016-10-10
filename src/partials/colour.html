@@ -1,0 +1,25 @@
+<md-dialog aria-label="Brightness and colour">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Brightness and colour</h2>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+    <map name="xyMap">
+      <area shape="poly" coords="0,200,100,0,200,200" ng-click="setXy($event)"/>
+    </map>
+    <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
+     <md-slider min="{{minBri}}" max="{{maxBri}}" ng-model="bri" aria-label="brightness">Brightness</md-slider>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button ng-click="save(xy)">
+       Done
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

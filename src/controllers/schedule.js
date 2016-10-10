@@ -2,7 +2,7 @@
 
 var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', '$state', '$stateParams', '$location', function($scope, $http, config, Color, Cron, $state, $stateParams, $location) {
+scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', '$state', '$stateParams', '$location', '$mdDialog', function($scope, $http, config, Color, Cron, $state, $stateParams, $location, $mdDialog) {
 
   $scope.editTemplate = 'partials/schedule-edit.html';
 
@@ -110,6 +110,8 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       });
   };
   /**
+   * TODO: Refactor this to take an object param for multiple fields. Implement unit tests at the same time.
+   *
    * Update a given schedule via the API.
    *
    * @param string scheduleId  Valid schedule ID.
@@ -191,5 +193,25 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       throw new Error('XY has incorrect type: "' + typeof xy + '"');
     }
     return {'background-color' : color};
+  };
+  $scope.showColourDialog = function(ev, schedule) {
+    $mdDialog.show({
+      controller: 'colourCtrl',
+      templateUrl: 'partials/colour.html',
+      locals: {
+          bri : schedule.bri,
+          xy : schedule.xy,
+          $scope : $scope
+      },
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+    .then(function(result) {
+      schedule.xy = result;
+      // First update the colour for local display.
+      $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+      $scope.updateSchedule(schedule.id, 'xy', schedule.xy);
+    });
   };
 }]);

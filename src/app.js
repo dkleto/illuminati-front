@@ -3,6 +3,7 @@
 var illuminati = angular.module('illuminati', [
     'scheduleCtrl',
     'liveCtrl',
+    'colourCtrl',
     'illuminatiColorService',
     'illuminatiCronService',
     'ui.router',
