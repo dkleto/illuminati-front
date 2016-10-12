@@ -29,7 +29,12 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
           schedule.id = schedule['_id']['$oid'];
           // Set timestamp for schedule sorting.
           schedule.timeStamp = Date.parse(schedule.creationtime);
-          $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+          if (schedule.on ) {
+            $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+          } else {
+            // Set grey background if light is off.
+            $scope.colors[schedule.id] = {'background-color' : '#999999'};
+          }
 
           var weekDay = {'mon' : true,
                          'tue' : true,
@@ -102,6 +107,14 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
           $scope.toggleEdit(scheduleId);
         }
       });
+  };
+  /**
+   * Update light status and then resync to change appearance of the schedule
+   * card.
+   */
+  $scope.updateOn = function(scheduleId, value) {
+    $scope.updateSchedule(scheduleId, value);
+    $scope.syncList();
   };
   /**
    * Update a given schedule via the API.
