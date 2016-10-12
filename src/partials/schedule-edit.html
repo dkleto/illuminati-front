@@ -1,5 +1,5 @@
    <md-switch ng-model="schedule.on" ng-change="updateOn(schedule.id, {'on' : schedule.on})" aria-label="light on/off">Light on/off</md-switch>
-  <md-button ng-click="showColourDialog($event, schedule)">
+  <md-button ng-if="schedule.on" ng-click="showColourDialog($event, schedule)">
     Colour
   </md-button>
   <md-input-container>
