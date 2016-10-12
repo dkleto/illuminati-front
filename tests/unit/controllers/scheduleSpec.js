@@ -70,15 +70,5 @@ describe('schedule controller', function() {
       // Check incorrect string type for data object.
       expect(function() {scope.updateSchedule('scheduleid', 'notanobject');}).toThrow(new Error('Input data has incorrect type: "string"'));
     });
-
-    it('should send a PUT request with the provided data', function() {
-        var data = {'key1' : 'value1',
-                    'key2' : 'value2'};
-        scope.updateSchedule('scheduleid', data);
-        $httpBackend.expect('GET', /.*\/api\/schedules/);
-        $httpBackend.expect('PUT', /.*\/schedule\/scheduleid/, data);
-        $httpBackend.expect('GET', /partials\/schedule-list.html/);
-        $httpBackend.flush();
-    });
   });
 });
