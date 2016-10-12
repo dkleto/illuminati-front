@@ -64,9 +64,6 @@ scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http'
       });
 
   }
-  $scope.setXy = function(point) {
-    $scope.xy = point;
-  };
   $scope.getXy = function(event) {
     var position = event.target.getBoundingClientRect();
     var x = event.clientX - position.left;

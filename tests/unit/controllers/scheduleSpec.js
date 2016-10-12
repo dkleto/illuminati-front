@@ -6,6 +6,9 @@ describe('schedule controller', function() {
   beforeEach(module('illuminati'));
   beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
     $httpBackend = _$httpBackend_;
+    $httpBackend.when('GET').respond({});
+    $httpBackend.when('PUT', /.*\/schedule\/scheduleid/)
+      .respond({});
     scope = $rootScope.$new();
     ctrl = $controller('scheduleCtrl', {$scope: scope});
   }));
@@ -59,5 +62,23 @@ describe('schedule controller', function() {
     });
   });
 
-});
+  describe('updateSchedule', function() {
+    it('should throw an error for incorrect param types', function() {
+      // Check incorrect object type for schedule ID.
+      expect(function() {scope.updateSchedule({}, {});}).toThrow(new Error('Schedule ID has incorrect type: "object"'));
 
+      // Check incorrect string type for data object.
+      expect(function() {scope.updateSchedule('scheduleid', 'notanobject');}).toThrow(new Error('Input data has incorrect type: "string"'));
+    });
+
+    it('should send a PUT request with the provided data', function() {
+        var data = {'key1' : 'value1',
+                    'key2' : 'value2'};
+        scope.updateSchedule('scheduleid', data);
+        $httpBackend.expect('GET', /.*\/api\/schedules/);
+        $httpBackend.expect('PUT', /.*\/schedule\/scheduleid/, data);
+        $httpBackend.expect('GET', /partials\/schedule-list.html/);
+        $httpBackend.flush();
+    });
+  });
+});

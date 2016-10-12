@@ -76,15 +76,9 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     }
     return false;
   };
-  $scope.updateColor = function(schedule, eventObj) {
-    schedule['xy'] = $scope.getXy(eventObj);
-    // First update the colour for local display.
-    $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
-    $scope.updateSchedule(schedule.id, 'xy', schedule.xy);
-  };
   $scope.updateCron = function(schedule, cronField, cronValue) {
     schedule.cron[cronField] = cronValue;
-    $scope.updateSchedule(schedule.id, 'cron', schedule.cron);
+    $scope.updateSchedule(schedule.id, {'cron' : schedule.cron});
   };
   /**
    * Create a new default schedule via the API, refresh the schedule list
@@ -110,20 +104,23 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       });
   };
   /**
-   * TODO: Refactor this to take an object param for multiple fields. Implement unit tests at the same time.
-   *
    * Update a given schedule via the API.
    *
    * @param string scheduleId  Valid schedule ID.
-   * @param string fieldName   Valid schedule field to update.
-   * @param mixed  fieldValue  Value to update the selected field with.
+   * @param object data        Request data object.
    */
-  $scope.updateSchedule = function(scheduleId, fieldName, fieldValue) {
-    var request = {};
+  $scope.updateSchedule = function(scheduleId, data) {
+    if (typeof scheduleId !== 'string') {
+        throw new Error('Schedule ID has incorrect type: "' +
+                        typeof scheduleId + '"');
+    }
+    if (typeof data !== 'object') {
+        throw new Error('Input data has incorrect type: "' +
+                        typeof data + '"');
+    }
     var putConfig = {timeout : config.timeout};
     var url = config.apiUrl + '/schedule/' + scheduleId;
-    request[fieldName] = fieldValue;
-    $http.put(url, request, putConfig);
+    $http.put(url, data, putConfig);
   };
   /**
    * Delete a given schedule via the API.
@@ -208,10 +205,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     })
     .then(function(result) {
-      schedule.xy = result;
+      schedule.xy = result.xy;
+      schedule.bri = result.bri;
       // First update the colour for local display.
       $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
-      $scope.updateSchedule(schedule.id, 'xy', schedule.xy);
+      $scope.updateSchedule(schedule.id, result);
     });
   };
 }]);
