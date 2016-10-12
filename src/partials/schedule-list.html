@@ -17,9 +17,6 @@
           <li class="scheduleLabel">
             {{schedule.label}}<br>
           </li>
-          <li class="scheduleTransTime">
-            Transition time: {{schedule.transitiontime}}
-          </li>
           <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
             <span ng-repeat="(key, value) in schedule.weekDays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>
           </li>
