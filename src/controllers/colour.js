@@ -2,7 +2,7 @@
 
 var colourCtrl = angular.module('colourCtrl', ['illuminati-conf']);
 
-colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color', function($scope, $mdDialog, bri, xy, Color) {
+colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color', 'config', '$http', function($scope, $mdDialog, bri, xy, Color, config, $http) {
     $scope.bri = bri;
     $scope.minBri = 0;
     $scope.maxBri = 255;
@@ -18,6 +18,12 @@ colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color'
     };
     $scope.setXy = function(eventObj) {
         $scope.xy = $scope.getXy(eventObj);
+    };
+    $scope.applyLive = function(result) {
+      var putConfig = {timeout         : config.timeout,
+                       params          : result,
+                       paramSerializer : '$httpParamSerializerJQLike'};
+      $http.put(config.apiUrl + '/lights/all', '', putConfig);
     };
     $scope.hide = function() {
       $mdDialog.hide();
