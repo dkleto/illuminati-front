@@ -2,10 +2,9 @@
 
 var scheduleCtrl = angular.module('editCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http', 'config', 'Color', 'Cron', '$window', function($scope, $stateParams, $state, $http, config, Color, Cron, $window) {
+scheduleCtrl.controller('editCtrl', ['$scope', '$stateParams', '$state', '$http', 'config', 'Color', 'Cron', '$window', '$mdpTimePicker', 'moment', function($scope, $stateParams, $state, $http, config, Color, Cron, $window, $mdpTimePicker, moment) {
   // Prevent images (e.g. color triangle) from being draggable.
   $window.ondragstart = function() {return false;};
-
   $scope.minBri = 0;
   $scope.maxBri = 255;
   $scope.bri = 255;
