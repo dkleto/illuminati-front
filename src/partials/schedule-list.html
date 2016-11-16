@@ -9,7 +9,7 @@
       <div class="scheduleBox" ng-style="$parent.colors[schedule.id]">
         <ul>
           <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
-            {{cron.getTime(schedule.cron)}}
+             <span ng-click="editTime($event, schedule)">{{cron.getTime(schedule.cron)}}</span>
           </li>
           <li ng-if="schedule.time">
             Time: {{schedule.time}}

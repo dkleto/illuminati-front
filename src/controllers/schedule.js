@@ -2,10 +2,10 @@
 
 var scheduleCtrl = angular.module('scheduleCtrl', ['illuminati-conf']);
 
-scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', '$state', '$stateParams', '$location', '$mdDialog', function($scope, $http, config, Color, Cron, $state, $stateParams, $location, $mdDialog) {
+scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', 'Cron', '$state', '$stateParams', '$location', '$mdDialog', '$mdpTimePicker', function($scope, $http, config, Color, Cron, $state, $stateParams, $location, $mdDialog, $mdpTimePicker) {
+
 
   $scope.editTemplate = 'partials/schedule-edit.html';
-
   // Set up function to handle type checking and default values.
   $scope.setVal = function(property, defVal, callback) {
     var validProp = typeof property !== 'undefined' && property !== null;
@@ -225,4 +225,35 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       $scope.updateSchedule(schedule.id, result);
     });
   };
+  /**
+   * If the provided schedule is currently in edit mode, open a timepicker
+   * dialog and prevent the editing state from being toggled. If it is not
+   * in edit mode, just open the dialog and allow the edit state to be enabled.
+   *
+   * @param object ev        Click event object.
+   * @param object schedule  Schedule object.
+   */
+  $scope.editTime = function(ev, schedule) {
+      if ($scope.isEditEnabled(schedule['_id']['$oid'])) {
+        ev.stopPropagation();
+      }
+      $scope.showTimePicker(ev, schedule);
+  }
+  /**
+   * Open a timepicker dialog and set the time for a schedule.
+   *
+   * @param object ev        Click event object.
+   * @param object schedule  Schedule object to set the hour and minute on.
+   */
+  $scope.showTimePicker = function(ev, schedule) {
+    var timeStr = schedule.cron.hour + ':' + schedule.cron.minute;
+    $mdpTimePicker(moment(timeStr, 'HH:mm'), {
+      targetEvent: ev
+    }).then(function(selectedTime) {
+      var time = moment(selectedTime);
+      schedule.cron.hour = time.format('HH');
+      schedule.cron.minute = time.format('mm');
+      $scope.updateSchedule(schedule.id, {'cron':schedule.cron});
+    });;
+  }
 }]);

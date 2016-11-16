@@ -42,7 +42,7 @@ h1 {
   width: 16em;
   padding: 0.8em;
   cursor: pointer;
-  outline: 0;
+  outline: none;
 }
 .scheduleBox ul {
   list-style-type: none;
@@ -64,4 +64,7 @@ div.liveContent {
 }
 .scheduleCronTime {
   font-size: 1.7em;
+}
+.scheduleBox span:focus {
+  outline: none;
 }

@@ -6,15 +6,6 @@
     <label>Label</label>
     <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, {'label': schedule.label})">
   </md-input-container>
-  <md-input-container>
-    <label>Hour</label>
-  <input type="number" min="0" max="23" ng-model="schedule.hour" ng-change="updateCron(schedule, 'hour', schedule.hour)">
-  </md-input-container>
-  <md-input-container>
-    <label>Minute</label>
-  <input type="number" min="0" max="59" ng-model="schedule.minute" ng-change="updateCron(schedule, 'minute', schedule.minute)">
-  </md-input-container>
-  <md-input-container>
     <label>Transition time</label>
     <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, {'transitiontime': schedule.transitiontime})">
   </md-input-container>
