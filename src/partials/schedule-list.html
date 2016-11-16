@@ -15,7 +15,9 @@
             Time: {{schedule.time}}
           </li>
           <li class="scheduleLabel">
-            {{schedule.label}}<br>
+          <md-input-container ng-click="stopEditToggle($event, schedule['_id']['$oid'])" ng-class="isEditEnabled(schedule.id) ? 'edit' : 'noedit'">
+            <input aria-label="label" type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, {'label': schedule.label})">
+          </md-input-container>
           </li>
           <li ng-if="!Cron.isCronAdvanced(schedule.cron)" class"testtest">
             <span ng-repeat="(key, value) in schedule.weekDays"><span ng-if="value">  {{key}}</span><span nf-if="!value"></span></span>

@@ -65,6 +65,15 @@ div.liveContent {
 .scheduleCronTime {
   font-size: 1.7em;
 }
-.scheduleBox span:focus {
+.scheduleBox :focus {
   outline: none;
+}
+.scheduleLabel md-input-container {
+  margin: 0;
+}
+.scheduleLabel .md-input:not(:focus) {
+  border: none;
+}
+.noedit .md-errors-spacer {
+  display: none;
 }

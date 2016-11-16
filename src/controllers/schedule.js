@@ -226,6 +226,18 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     });
   };
   /**
+   * If edting is enabled for the provided schedule, prevent propagation for
+   * the provided click event.
+   *
+   * @param object ev        Click event object.
+   * @param object schedule  Schedule ID.
+   */
+  $scope.stopEditToggle = function(ev, scheduleId) {
+      if ($scope.isEditEnabled(scheduleId)) {
+        ev.stopPropagation();
+      }
+  }
+  /**
    * If the provided schedule is currently in edit mode, open a timepicker
    * dialog and prevent the editing state from being toggled. If it is not
    * in edit mode, just open the dialog and allow the edit state to be enabled.
@@ -234,9 +246,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
    * @param object schedule  Schedule object.
    */
   $scope.editTime = function(ev, schedule) {
-      if ($scope.isEditEnabled(schedule['_id']['$oid'])) {
-        ev.stopPropagation();
-      }
+      $scope.stopEditToggle(ev, schedule['_id']['$oid']);
       $scope.showTimePicker(ev, schedule);
   }
   /**
