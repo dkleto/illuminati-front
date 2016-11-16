@@ -3,8 +3,7 @@
     Colour
   </md-button>
   <md-input-container>
-    <label>Label</label>
-    <input type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, {'label': schedule.label})">
+    <input aria-label="label" type="text" ng-model="schedule.label" ng-change="updateSchedule(schedule.id, {'label': schedule.label})">
   </md-input-container>
     <label>Transition time</label>
     <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, {'transitiontime': schedule.transitiontime})">
