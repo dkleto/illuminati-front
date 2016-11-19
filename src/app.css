@@ -71,7 +71,7 @@ div.liveContent {
 .scheduleLabel md-input-container {
   margin: 0;
 }
-.scheduleLabel .md-input:not(:focus) {
+.scheduleLabel .noedit .md-input:not(:focus) {
   border: none;
 }
 .noedit .md-errors-spacer {
