@@ -7,10 +7,8 @@
     <button ng-click="transTimeIncrement(false)">&gt;</button>
     {{displayTransTime()}}
   <div>
-    <span ng-repeat="(key, value) in schedule.weekday">
-      <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
-        {{key}}
-      </span>
+    <span ng-repeat="(key, value) in schedule.weekday" class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
+      {{key}}
     </span>
   </div>
   <md-button ng-click="delSchedule(schedule)" aria-label="delete schedule">
