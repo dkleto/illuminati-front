@@ -18,7 +18,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
   };
   $scope.maxBri = 255;
   $scope.minBri = 0;
-  $scope.colors = {}
+  $scope.scheduleState = {};
   $scope.syncList = function() {
     // Pull down all schedules and build an array of schedule objects.
     $http.get(config.apiUrl + '/schedules')
@@ -27,13 +27,17 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
         for (var i=0; i < $scope.schedules.length; i++) {
           var schedule = $scope.schedules[i];
           schedule.id = schedule['_id']['$oid'];
+          if ($scope.isEditEnabled(schedule.id)) {
+            $scope.editTransTime = schedule.transitiontime;
+          }
           // Set timestamp for schedule sorting.
           schedule.timeStamp = Date.parse(schedule.creationtime);
+          $scope.scheduleState[schedule.id] = {'transitiontime' : schedule.transitiontime};
           if (schedule.on ) {
-            $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+            $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
           } else {
             // Set grey background if light is off.
-            $scope.colors[schedule.id] = {'background-color' : '#999999'};
+            $scope.scheduleState[schedule.id]['colour'] = {'background-color' : '#999999'};
           }
 
           var weekDay = {'mon' : true,
@@ -71,6 +75,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
         $location.path('/schedules');
       } else {
         // Open schedule for editing if it is not already open.
+        $scope.editTransTime = $scope.scheduleState[schedId]['transitiontime'];
         $location.path(fullPath);
       }
     }
@@ -221,7 +226,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       schedule.xy = result.xy;
       schedule.bri = result.bri;
       // First update the colour for local display.
-      $scope.colors[schedule.id] = $scope.getSchedColor(schedule);
+      $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
       $scope.updateSchedule(schedule.id, result);
     });
   };

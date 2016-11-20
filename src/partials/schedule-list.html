@@ -6,7 +6,7 @@
 <div class="scheduleBoard">
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
     <md-card ng-click="toggleEdit(schedule['_id']['$oid'])" class="schedule">
-      <div class="scheduleBox" ng-style="$parent.colors[schedule.id]">
+      <div class="scheduleBox" ng-style="$parent.scheduleState[schedule.id]['colour']">
         <ul>
           <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
              <span ng-click="editTime($event, schedule)">{{cron.getTime(schedule.cron)}}</span>
