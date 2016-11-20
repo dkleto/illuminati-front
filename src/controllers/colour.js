@@ -21,6 +21,7 @@ colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color'
     };
     $scope.applyLive = function(result) {
       result.on = true;
+      result.transitiontime = 10;
       var putConfig = {timeout         : config.timeout,
                        params          : result,
                        paramSerializer : '$httpParamSerializerJQLike'};
