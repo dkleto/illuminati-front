@@ -3,14 +3,14 @@
     Colour
   </md-button>
     <md-slider flex="" min="0" max="100" ng-model="transTimeFunc" ng-model-options="{getterSetter : true}" ng-change="updateTransTime(schedule.id)" aria-label="transition time" id="transTime"></md-slider>
-    <button ng-click="transTimeIncrement(true)">&lt;</button>
-    <button ng-click="transTimeIncrement(false)">&gt;</button>
+    <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(true)"><md-icon>remove_circle_outline</md-icon></button>
+    <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(false)"><md-icon>add_circle_outline</md-icon></button>
     {{displayTransTime()}}
   <div>
     <span ng-repeat="(key, value) in schedule.weekday" class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
       {{key}}
     </span>
   </div>
-  <md-button ng-click="delSchedule(schedule)" aria-label="delete schedule">
-  <p class="delSchedule material-icons">delete</p>
-  </md-button>
+  <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="delSchedule(schedule)" aria-label="delete schedule">
+  <md-icon>delete</md-icon>
+  </button>
