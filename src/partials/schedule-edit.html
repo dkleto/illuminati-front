@@ -2,9 +2,10 @@
   <md-button ng-disabled="!schedule.on" ng-click="showColourDialog($event, schedule)">
     Colour
   </md-button>
-    <label>Transition time</label>
-    <input type="number" min="0" max="600" ng-model="schedule.transitiontime" ng-change="updateSchedule(schedule.id, {'transitiontime': schedule.transitiontime})">
-  </md-input-container>
+    <md-slider flex="" min="0" max="100" ng-model="transTimeFunc" ng-model-options="{getterSetter : true}" ng-change="updateTransTime(schedule.id)" aria-label="transition time" id="transTime"></md-slider>
+    <button ng-click="transTimeIncrement(true)">&lt;</button>
+    <button ng-click="transTimeIncrement(false)">&gt;</button>
+    {{displayTransTime()}}
   <div>
     <span ng-repeat="(key, value) in schedule.weekday">
       <span class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">

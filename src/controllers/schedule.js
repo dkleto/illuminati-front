@@ -101,7 +101,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
                              'day'    : '*',
                              'month'  : '*',
                              'weekday': '*'},
-                   'transitiontime' : 50};
+                   'transitiontime' : 20};
     var postConfig = {timeout : config.timeout};
     var url = config.apiUrl + '/schedule';
     $http.post(url, request, postConfig)
@@ -241,7 +241,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       if ($scope.isEditEnabled(scheduleId)) {
         ev.stopPropagation();
       }
-  }
+  };
   /**
    * If the provided schedule is currently in edit mode, open a timepicker
    * dialog and prevent the editing state from being toggled. If it is not
@@ -253,7 +253,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
   $scope.editTime = function(ev, schedule) {
       $scope.stopEditToggle(ev, schedule['_id']['$oid']);
       $scope.showTimePicker(ev, schedule);
-  }
+  };
   /**
    * Open a timepicker dialog and set the time for a schedule.
    *
@@ -269,6 +269,114 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
       schedule.cron.hour = time.format('HH');
       schedule.cron.minute = time.format('mm');
       $scope.updateSchedule(schedule.id, {'cron':schedule.cron});
-    });;
+    });
+  };
+  /**
+   * Get/set the value of editTimeTransTime. This allows us to apply a log
+   * scale to the raw values provided from the slider, so small increments are
+   * possible when dealing in seconds or milliseconds, but larger values are
+   * less exact.
+   *
+   * When provided with a position argument, round the value appropriately and
+   * then set editTransTime on the main scope. Otherwise return the value of
+   * editTransTime.
+   *
+   * Note that editTransTime is set on the main scope, but we copy this value
+   * to a mapping of schedule IDs to transition time values elsewhere in order
+   * to actually apply it.
+   *
+   * @param int position  Position slider value between 0 and 100.
+   */
+  $scope.transTimeFunc = function(position) {
+    var minp = 0;
+    var maxp = 100;
+    var minv = Math.log(10);
+    var maxv = Math.log(6353510);
+    var scale = (maxv-minv) / (maxp-minp);
+
+    // If position was provided, set the trans time value.
+    if (arguments.length) {
+        var val = Math.exp(minv + scale*(position - minp)) - 10;
+        // For values over 5 seconds, round to the nearest second.
+        var round;
+        if (val < 50) {
+          round = 1;
+        } else if (val < 15*600) {
+          round = 10;
+        } else {
+          round = 600;
+        }
+        return $scope.editTransTime = Math.round(val/round) * round;
+    }
+
+    // Otherwise, fetch the current trans time value.
+    var a = Math.log($scope.editTransTime + 10);
+    return (a - minv)/scale;
+  };
+  /**
+   * Increment/decrement the value of editTransTime on the main scope, then
+   * update the transition time via the API and locally in the schedule ID
+   * mapping.
+   *
+   * Depending on the magnitude of the current value, the increment will be
+   * either 1 (100 ms), 10 (1 s) or 600 (1 min).
+   *
+   * @param bool decrement  True for decrement, false for increment.
+   */
+  $scope.transTimeIncrement = function(decrement) {
+    var inc;
+
+    if ($scope.editTransTime < 50) {
+      inc = 1;
+    } else if ($scope.editTransTime < 600*15) {
+      inc = 10;
+    } else {
+      inc = 600;
+    }
+
+    if (decrement && $scope.editTransTime >= inc) {
+      $scope.editTransTime = $scope.editTransTime - inc;
+    } else if ($scope.editTransTime <= (6353500 - inc)) {
+      $scope.editTransTime = $scope.editTransTime + inc;
+    }
+
+    $scope.updateTransTime(schedule.id);
+  };
+  /**
+   * Format the current editTransTime value appropriately for display
+   *
+   * @return string  Formatted transition time representation.
+   */
+  $scope.displayTransTime = function() {
+    var transTime = moment.utc($scope.editTransTime * 100);
+    var addUnit = function(arr, transTime, label) {
+      var val = parseInt(transTime);
+      if (val > 0) {
+        arr.push(val > 1 ? val + label + 's' : val + label);
+      }
+      return arr;
+    }
+    var timeArr = [];
+    // Days of the year start at 1.
+    addUnit(timeArr, transTime.format('D') - 1 , ' day');
+    addUnit(timeArr, transTime.format('H'), ' hour');
+    addUnit(timeArr, transTime.format('m'), ' minute');
+    addUnit(timeArr, transTime.format('s'), ' second');
+    addUnit(timeArr, transTime.format('S') * 100, ' m');
+    if (timeArr.length === 0) {
+      return 'Instant';
+    }
+    return timeArr.join(', ');
   }
+  /**
+   * Update the transition time for this schedule, updating the transition time
+   * value for this schedule via the API and saving the value of editTransTime
+   * from the main scope to the schedule mapping object for use locally.
+   *
+   * @param string scheduleId  Valid schedule ID.
+   */
+  $scope.updateTransTime = function(scheduleId) {
+    $scope.updateSchedule(scheduleId, {transitiontime: $scope.editTransTime});
+    $scope.scheduleState[scheduleId]['transitiontime'] = $scope.editTransTime;
+  };
 }]);
