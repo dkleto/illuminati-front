@@ -92,3 +92,6 @@ div.liveContent {
   height: 1.4em;
   border-radius: 0.2em
 }
+.scheduleEdit button.md-icon-button {
+  margin: 0;
+}
