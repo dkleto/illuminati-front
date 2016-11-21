@@ -77,3 +77,18 @@ div.liveContent {
 .noedit .md-errors-spacer {
   display: none;
 }
+.weekDays {
+  text-align: center;
+  margin: 0.7em 0 0.7em 0;
+}
+.day {
+  display: inline-block;
+  text-transform: uppercase;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.1em;
+  margin: 0.15em;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 0.2em
+}
