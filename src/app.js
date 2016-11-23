@@ -15,8 +15,15 @@ var illuminati = angular.module('illuminati', [
     'mdPickers'
 ]);
 
-illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider',
-  function($stateProvider, $urlRouterProvider, $httpProvider) {
+illuminati.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$mdThemingProvider',
+  function($stateProvider, $urlRouterProvider, $httpProvider, $mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('grey', {
+          'default': '800',
+        })
+        .accentPalette('red', {
+          'default': '300'
+        });
     $urlRouterProvider.otherwise("/schedules");
     $stateProvider
         .state('schedules', {
