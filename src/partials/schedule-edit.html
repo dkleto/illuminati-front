@@ -1,7 +1,4 @@
   <md-switch ng-model="schedule.on" ng-change="updateOn(schedule.id, {'on' : schedule.on})" aria-label="light on/off">Light on/off</md-switch>
-  <md-button ng-disabled="!schedule.on" ng-click="showColourDialog($event, schedule)">
-    Colour
-  </md-button>
   <div>{{displayTransTime()}}</div>
   <md-slider flex="" min="0" max="100" ng-model="transTimeFunc" ng-model-options="{getterSetter : true}" ng-change="updateTransTime(schedule.id)" aria-label="transition time" id="transTime"></md-slider>
   <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(true)"><md-icon>remove_circle_outline</md-icon></button>

@@ -19,7 +19,7 @@ h1 {
   background-color: rgba(0,0,0,0.3);
 }
 .scheduleEdit {
-  padding: 0.5em;
+  padding: 0;
   outline: 0;
 }
 .titleBar {
@@ -43,10 +43,11 @@ h1 {
   padding: 0.8em;
   cursor: pointer;
   outline: none;
+  background-color: #EEEEEE;
 }
 .scheduleBox ul {
   list-style-type: none;
-  padding: 0.5em;
+  padding: 0;
   margin: 0;
 }
 div.liveContent {
@@ -60,10 +61,10 @@ div.liveContent {
   background-color: #FFFFFF;
 }
 .scheduleEdit .dayOff {
-  background-color: #DDDDDD;
+  background-color: transparent;
 }
 .scheduleCronTime {
-  font-size: 1.7em;
+  font-size: 2em;
 }
 .scheduleBox :focus {
   outline: none;
@@ -94,4 +95,18 @@ div.liveContent {
 }
 .scheduleEdit button.md-icon-button {
   margin: 0;
+  padding: 0;
+}
+span.colour {
+  float: right;
+}
+.colour .md-icon-button {
+  margin: 0;
+  padding: 0;
+  font-size: 3em;
+}
+.colour .md-icon-button .noLight {
+  position: relative;
+  top: -2em;
+  font-size: 0.28em;
 }

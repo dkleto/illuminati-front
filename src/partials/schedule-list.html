@@ -6,10 +6,15 @@
 <div class="scheduleBoard">
   <div ng-repeat="schedule in schedules | orderBy: 'timeStamp'">
     <md-card ng-click="toggleEdit(schedule['_id']['$oid'])" class="schedule">
-      <div class="scheduleBox" ng-style="$parent.scheduleState[schedule.id]['colour']">
+      <div class="scheduleBox">
         <ul>
           <li class="scheduleCronTime" ng-if="cron.getTime(schedule.cron)">
-             <span ng-click="editTime($event, schedule)">{{cron.getTime(schedule.cron)}}</span>
+            <span ng-click="editTime($event, schedule)">{{cron.getTime(schedule.cron)}}</span>
+            <span class="colour">
+              <button ng-style="$parent.scheduleState[schedule.id]['colour']" ng-disable="!schedule.on"class="md-icon-button md-primary md-button md-ink-ripple" ng-click="showColourDialog($event, schedule)" aria-label="select colour and brightness">
+              <md-icon>lightbulb_outline</md-icon><span ng-if="!schedule.on" class="noLight">/</span>
+              </button>
+            </span>
           </li>
           <li ng-if="schedule.time">
             Time: {{schedule.time}}

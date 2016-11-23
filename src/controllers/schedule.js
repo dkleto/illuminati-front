@@ -36,8 +36,8 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
           if (schedule.on ) {
             $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
           } else {
-            // Set grey background if light is off.
-            $scope.scheduleState[schedule.id]['colour'] = {'background-color' : '#999999'};
+            // Set transparent background if light is off.
+            $scope.scheduleState[schedule.id]['colour'] = {'background-color' : 'transparent'};
           }
 
           var weekDay = {'mon' : true,
@@ -210,6 +210,10 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     return {'background-color' : color};
   };
   $scope.showColourDialog = function(ev, schedule) {
+    if (!schedule.on) {
+      return;
+    }
+    $scope.stopEditToggle(ev, schedule.id);
     $mdDialog.show({
       controller: 'colourCtrl',
       templateUrl: 'partials/colour.html',
