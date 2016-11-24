@@ -110,3 +110,21 @@ span.colour {
   top: -2em;
   font-size: 0.28em;
 }
+.addSchedule {
+  float: left;
+  width: 16em;
+  height: 6em;
+  padding: 0.8em;
+  cursor: pointer;
+  outline: none;
+}
+.addSchedule #addSchedule {
+  height: 4em;
+  margin: auto;
+  width: 100%;
+}
+.addSchedule #addSchedule .material-icons {
+  font-size: 3em;
+  margin: auto;
+  width: 100%;
+}
