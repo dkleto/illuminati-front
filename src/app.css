@@ -30,7 +30,6 @@ h1 {
 }
 .scheduleBoard, .liveContent {
   background-color: #EEEEEE;
-  overflow: auto;
   width: 100%;
   height: 100%;
   top: 3.5em;
@@ -127,4 +126,10 @@ span.colour {
   font-size: 3em;
   margin: auto;
   width: 100%;
+}
+@media (max-width: 767px) and (orientation: portrait) {
+  .schedule, .addSchedule {
+    width: 100%;
+    margin: 0;
+  }
 }
