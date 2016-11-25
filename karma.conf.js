@@ -13,6 +13,9 @@ module.exports = function(config){
       'node_modules/angular-animate/angular-animate.js',
       'node_modules/angular-messages/angular-messages.js',
       'node_modules/angular-aria/angular-aria.js',
+      'node_modules/angular-momentjs/angular-momentjs.js',
+      'node_modules/moment/moment.js',
+      'node_modules/mdPickers/dist/mdPickers.min.js',
       'dist/**.js',
       'src/**/*.js',
       'tests/unit/**/*.js'
