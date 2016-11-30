@@ -34,12 +34,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
           // Set timestamp for schedule sorting.
           schedule.timeStamp = Date.parse(schedule.creationtime);
           $scope.scheduleState[schedule.id] = {'transitiontime' : schedule.transitiontime};
-          if (schedule.on ) {
-            $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
-          } else {
-            // Set transparent background if light is off.
-            $scope.scheduleState[schedule.id]['colour'] = {'background-color' : 'transparent'};
-          }
+          $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
 
           var weekDay = {'mon' : true,
                          'tue' : true,
@@ -118,8 +113,9 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
    * Update light status and then resync to change appearance of the schedule
    * card.
    */
-  $scope.updateOn = function(scheduleId, value) {
-    $scope.updateSchedule(scheduleId, value);
+  $scope.updateOn = function(schedule, value) {
+    $scope.updateSchedule(schedule.id, value);
+    $scope.scheduleState[schedule.id]['colour'] = $scope.getSchedColor(schedule);
   };
   /**
    * Update a given schedule via the API.
@@ -191,6 +187,11 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
     'b' : {'x' : 0.135503, 'y' : 0.039879}
   };
   $scope.getSchedColor = function(schedule) {
+    if (!schedule.on ) {
+      // Set transparent background if light is off.
+      return {'background-color' : 'transparent'};
+    }
+
     var color = '#FFFFFF';
     var xy = schedule['xy'];
     if (typeof xy == 'object') {

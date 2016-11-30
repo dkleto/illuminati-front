@@ -16,16 +16,20 @@ describe('schedule controller', function() {
   describe('getSchedColor', function() {
     it('should generate white background colour by default', function() {
       // Check missing xy property.
-      var result = scope.getSchedColor({});
+      var result = scope.getSchedColor({'on' : true});
       expect(typeof result).toEqual('object');
       expect(result['background-color']).toEqual('#FFFFFF');
 
     });
-
     it('should throw an error for incorrect xy type', function() {
       // Check incorrect type for xy.
-      var invalid = {'xy' : 'Clearly not an object'};
+      var invalid = {'xy' : 'Clearly not an object', 'on' : true};
       expect(function() {scope.getSchedColor(invalid);}).toThrow(new Error('XY has incorrect type: "string"'));
+    });
+    it('should return transparent background if light is off', function() {
+      var result = scope.getSchedColor({});
+      expect(typeof result).toEqual('object');
+      expect(result['background-color']).toEqual('transparent');
     });
   });
 
