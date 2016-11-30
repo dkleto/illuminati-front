@@ -120,7 +120,6 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
    */
   $scope.updateOn = function(scheduleId, value) {
     $scope.updateSchedule(scheduleId, value);
-    $scope.syncList();
   };
   /**
    * Update a given schedule via the API.
