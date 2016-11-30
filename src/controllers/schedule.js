@@ -18,6 +18,7 @@ scheduleCtrl.controller('scheduleCtrl', ['$scope', '$http', 'config', 'Color', '
   };
   $scope.maxBri = 255;
   $scope.minBri = 0;
+  $scope.showTransTime = false;
   $scope.scheduleState = {};
   $scope.syncList = function() {
     // Pull down all schedules and build an array of schedule objects.

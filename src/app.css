@@ -130,6 +130,12 @@ span.colour {
   margin: auto;
   width: 100%;
 }
+.transTime > span {
+  vertical-align: middle;
+}
+.transTime > md-icon {
+  padding: 0 0.2em 0 0;
+}
 @media (max-width: 767px) and (orientation: portrait) {
   .schedule, .addSchedule {
     width: 100%;

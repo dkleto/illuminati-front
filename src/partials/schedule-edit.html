@@ -1,8 +1,12 @@
   <md-switch ng-model="schedule.on" ng-change="updateOn(schedule.id, {'on' : schedule.on})" aria-label="light on/off">Light on/off</md-switch>
-  <div>{{displayTransTime()}}</div>
-  <md-slider flex="" min="0" max="100" ng-model="transTimeFunc" ng-model-options="{getterSetter : true}" ng-change="updateTransTime(schedule.id)" aria-label="transition time" id="transTime"></md-slider>
-  <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(true)"><md-icon>remove_circle_outline</md-icon></button>
-  <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(false)"><md-icon>add_circle_outline</md-icon></button>
+  <div class="transTime" ng-click="showTransTime = !showTransTime">
+  <md-icon aria-label="transition time">timer</md-icon><span>{{displayTransTime()}}</span>
+  </div>
+  <div ng-if="showTransTime">
+    <md-slider flex="" min="0" max="100" ng-model="transTimeFunc" ng-model-options="{getterSetter : true}" ng-change="updateTransTime(schedule.id)" aria-label="transition time" id="transTime"></md-slider>
+    <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(true)"><md-icon>remove_circle_outline</md-icon></button>
+    <button class="md-icon-button md-primary md-button md-ink-ripple" ng-click="transTimeIncrement(false)"><md-icon>add_circle_outline</md-icon></button>
+  </div>
   <div class="weekDays">
     <span ng-repeat="(key, value) in schedule.weekday" class="day" ng-class="dayClass(value)" ng-click="toggleDay(schedule, key)">
       {{key.substring(1,-1)}}
