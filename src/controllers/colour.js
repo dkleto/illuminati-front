@@ -2,7 +2,10 @@
 
 var colourCtrl = angular.module('colourCtrl', ['illuminati-conf']);
 
-colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color', 'config', '$http', function($scope, $mdDialog, bri, xy, Color, config, $http) {
+colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color', 'config', '$http', '$window', function($scope, $mdDialog, bri, xy, Color, config, $http, $window) {
+    // Prevent images (e.g. color triangle) from being draggable.
+    $window.ondragstart = function() {return false;};
+
     $scope.bri = bri;
     $scope.minBri = 0;
     $scope.maxBri = 255;
