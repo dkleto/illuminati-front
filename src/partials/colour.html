@@ -9,7 +9,8 @@
     <md-dialog-content>
       <div class="md-dialog-content">
     <map name="xyMap">
-      <area shape="poly" coords="0,200,100,0,200,200" ng-click="setXy($event)"/>
+      <area id="colour-triangle" shape="poly" coords="0,200,100,0,200,200" ng-click="setXy($event)"/>
+      <md-icon ng-style="marker" id="colour-marker">location_searching</md-icon>
     </map>
     <img src="images/gamutb.png" width="200" height="200" usemap="#xyMap">
      <md-slider min="{{minBri}}" max="{{maxBri}}" ng-model="bri" aria-label="brightness">Brightness</md-slider>

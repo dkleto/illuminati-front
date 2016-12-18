@@ -203,6 +203,34 @@ describe('illuminati services', function() {
         expect(Color.getXy(height, width, x, y)).toEqual(result);
       });
     });
+
+    describe('getPosition', function() {
+      it('should throw an error for non-numeric colour coords', function() {
+        expect(function() {
+          Color.getPosition({}, 1, 1);
+        }).toThrow(new Error('Invalid point: {} x and y must be numbers.'));
+      });
+
+      it('should throw an error for non-numeric height or width', function() {
+        expect(function() {
+          Color.getPosition({'x' : 0.5, 'y' : 0.5}, 'notvalid', null);
+        }).toThrow(new Error('Invalid height/width H: "notvalid" W: "null".'
+                           + ' Height and width should be numbers.'));
+      });
+
+      it('should throw an error for xy values outside 0 and 1', function() {
+        expect(function() {
+          Color.getPosition({'x' : -0.5, 'y' : 1.2}, 1, 1);
+        }).toThrow(new Error('Invalid point: X: -0.5 Y: 1.2 - coordinates '
+                           + 'should be between 0,0 and 1,1.'));
+      });
+
+      it('should correctly calculate coordinates', function() {
+        var input = {'x' : 0.5, 'y' : 0.5};
+        var expected = {'left': '38px', 'top' : '62px'};
+        expect(Color.getPosition(input, 100, 100)).toEqual(expected);
+      });
+    });
   });
 
   describe('cron', function() {

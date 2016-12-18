@@ -7,6 +7,7 @@ colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color'
     $scope.minBri = 0;
     $scope.maxBri = 255;
     $scope.xy = xy;
+    $scope.marker = Color.getPosition(xy, 200, 200);
     $scope.getXy = function(event) {
       var position = event.target.getBoundingClientRect();
       var x = event.clientX - position.left;
@@ -14,10 +15,13 @@ colourCtrl.controller('colourCtrl', ['$scope', '$mdDialog', 'bri', 'xy', 'Color'
       var height = position.height;
       var width = position.width;
 
+      // Update marker position.
+      $scope.marker = {'top' : y + 12 + 'px', 'left': x - 12 + 'px'};
+
       return Color.getXy(height, width, x, y);
     };
     $scope.setXy = function(eventObj) {
-        $scope.xy = $scope.getXy(eventObj);
+      $scope.xy = $scope.getXy(eventObj);
     };
     $scope.applyLive = function(result) {
       result.on = true;

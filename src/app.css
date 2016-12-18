@@ -142,3 +142,11 @@ span.colour {
     margin: 0;
   }
 }
+#colour-marker {
+  position: relative;
+  z-index: 100;
+  text-align: center;
+}
+#colour-triangle {
+  cursor: pointer;
+}

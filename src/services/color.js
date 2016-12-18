@@ -152,22 +152,47 @@ color.factory('Color', [function() {
     // Add x and y vectors and translate them to point p.
     return color.xyPoint(yv.x + xv.x + p.x, yv.y + xv.y + p.y);
   };
+  color.isNum = function(i) {
+    return typeof i === 'number' ? true : false;
+  };
+  color.inRange = function(i, min, max) {
+    return color.isNum(i) && i >= min && i <= max ? true : false;
+  };
+  /**
+   * Given a point object with x and y values between 0 and 1 and height and
+   * width values in pixels, return an object representing the CSS properties
+   * to position a 24x24px marker image relative to a parent element with the
+   * provided width and height.
+   *
+   * @param object xy      Point object with and X and Y values.
+   * @param int    height  Height of the parent element in pixels.
+   * @param int    width   Width of the parent element in pixels.
+   */
+  color.getPosition = function(xy, height, width) {
+    if (!color.isNum(xy.x) || !color.isNum(xy.y)) {
+        throw new Error('Invalid point: ' + JSON.stringify(xy) +
+                        ' x and y must be numbers.');
+    }
+    if (!color.isNum(height) || !color.isNum(width)) {
+        throw new Error('Invalid height/width H: "' + height + '" W: "' + width
+                      + '". Height and width should be numbers.');
+    }
+    if (!color.inRange(xy.x, 0, 1) || !color.inRange(xy.y, 0, 1)) {
+        throw new Error('Invalid point: X: ' + xy.x + ' Y: ' + xy.y + ' - '
+                      + 'coordinates should be between 0,0 and 1,1.');
+    }
+    return {'top' : (1 - xy.y) * height + 12 + 'px',
+            'left': xy.x * width - 12 + 'px'};
+  };
   color.getXy = function(height, width, x, y) {
-    var isNum = function(i) {
-      return typeof i === 'number' ? true : false;
-    };
-    var inRange = function(i, min, max) {
-      return isNum(i) && i >= min && i <= max ? true : false;
-    };
-
     // Height, width should be non-zero and positive.
-    if (!isNum(height) || !isNum(width) || height <= 0 || width <= 0) {
+    if (!color.isNum(height) || !color.isNum(width) || height <= 0 || width <= 0) {
       throw new Error('Invalid height and width values - ' +
                       'height: ' + height + 'width: ' + width);
     }
 
     // x, y should be between 0 and the width and height values respectively.
-    if (!inRange(x, 0, width) || !inRange(y, 0, height)) {
+    if (!color.inRange(x, 0, width) || !color.inRange(y, 0, height)) {
       throw new Error('Invalid x and y coordinates - x: ' + x + ' y: ' + y);
     }
 
