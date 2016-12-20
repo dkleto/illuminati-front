@@ -150,3 +150,6 @@ span.colour {
 #colour-triangle {
   cursor: pointer;
 }
+.md-dialog-content map {
+  display: block;
+}
